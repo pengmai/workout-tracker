@@ -1,10 +1,13 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"html/template"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/julienschmidt/httprouter"
@@ -142,7 +145,115 @@ func (env *Env) AddWorkout(w http.ResponseWriter, r *http.Request, ps httprouter
 		internalServerError(w, err)
 		return
 	}
+
+	name, err := env.db.GetUsername(workout.User)
+	if err != nil {
+		internalServerError(w, err)
+		return
+	}
+	log.WithField("name", name).Info("Added workout")
 	w.WriteHeader(http.StatusCreated)
+}
+
+func (env *Env) UpdateWorkout(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, err, "Invalid request")
+		return
+	}
+
+	var workout Workout
+	err = json.Unmarshal(body, &workout)
+	if err != nil ||
+		workout.ID == 0 || workout.User == 0 ||
+		workout.Start.IsZero() || workout.End.IsZero() {
+		respondWithError(
+			w,
+			http.StatusBadRequest,
+			fmt.Errorf("invalid request: %s", string(body)),
+			"Invalid request",
+		)
+		return
+	}
+
+	if !workout.End.After(workout.Start.Time) {
+		respondWithError(
+			w,
+			http.StatusBadRequest,
+			fmt.Errorf("end %v is not after start %v", workout.End, workout.Start),
+			"End time must be greater than start time",
+		)
+		return
+	}
+
+	err = env.db.UpdateWorkout(workout)
+	switch {
+	case err == ErrUserNotAuthorized:
+		respondWithError(
+			w,
+			http.StatusUnauthorized,
+			err,
+			"The requested workout does not belong to you",
+		)
+		return
+	case err != nil:
+		internalServerError(w, err)
+		return
+	}
+
+	name, err := env.db.GetUsername(workout.User)
+	log.WithFields(log.Fields{
+		"name":    name,
+		"workout": workout.ID,
+		"start":   workout.Start,
+		"end":     workout.End,
+	}).Debug("Updated workout")
+	log.WithField("name", name).Info("Updated workout")
+	w.WriteHeader(http.StatusNoContent)
+}
+
+func (env *Env) DeleteWorkout(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	workoutString := ps.ByName("id")
+	workoutID, err := strconv.ParseInt(workoutString, 10, 32)
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, err, "Invalid workout")
+		return
+	}
+	err = env.db.DeleteWorkout(int(workoutID))
+	if err != nil {
+		internalServerError(w, err)
+		return
+	}
+	log.WithField("id", workoutID).Info("Deleted workout")
+	w.WriteHeader(http.StatusNoContent)
+}
+
+/* Serve static files */
+func GetIndex(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	type ApplicationMetadata struct {
+		Name string
+	}
+	metadata := ApplicationMetadata{"Workout Service"}
+	t := template.Must(template.New("index.gohtml").ParseFiles("./static/index.gohtml"))
+	var b bytes.Buffer
+	err := t.Execute(&b, metadata)
+	if err != nil {
+		internalServerError(w, err)
+		return
+	}
+	b.WriteTo(w)
+}
+
+func GetIcon(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	http.ServeFile(w, r, "./static/favicon.ico")
+}
+
+func GetStyles(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	http.ServeFile(w, r, "./static/main.css")
+}
+
+func GetGopher(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	http.ServeFile(w, r, "./static/coffee-gopher.gif")
 }
 
 func NotFound(w http.ResponseWriter, r *http.Request) {

@@ -10,7 +10,10 @@ type Datastore interface {
 	SignUp(request UserRequest) (int, error)
 	LoginWithCredentials(name, passHash string) (User, error)
 	LoginWithToken(token string) (User, error)
+	GetUsername(userID int) (string, error)
 	AddWorkout(workout Workout) error
+	UpdateWorkout(workout Workout) error
+	DeleteWorkout(workoutID int) error
 	GetWorkouts(userID int) ([]Workout, error)
 	GetUsers() ([]string, error)
 }
@@ -72,10 +75,20 @@ func (db *DB) LoginWithToken(token string) (User, error) {
 	switch {
 	case err == sql.ErrNoRows:
 		return user, ErrUserNotFound
-	case err != nil:
-		return user, err
 	default:
 		return user, nil
+	}
+}
+
+func (db *DB) GetUsername(userID int) (string, error) {
+	var name string
+	row := db.QueryRow("SELECT name FROM users WHERE id = $1", userID)
+	err := row.Scan(&name)
+	switch {
+	case err == sql.ErrNoRows:
+		return name, ErrUserNotFound
+	default:
+		return name, err
 	}
 }
 
@@ -88,6 +101,34 @@ func (db *DB) AddWorkout(workout Workout) error {
 		`INSERT INTO workouts(user_id, start_time, end_time)
 		VALUES ($1, $2, $3)`,
 		workout.User, workout.Start.Time, workout.End.Time,
+	)
+	return err
+}
+
+func (db *DB) UpdateWorkout(workout Workout) error {
+	// Verify that the workout belongs to the user
+	var ourUser int
+	_ = db.QueryRow(
+		"SELECT user_id FROM workouts WHERE id = $1",
+		workout.ID,
+	).Scan(&ourUser)
+	if ourUser != workout.User {
+		return ErrUserNotAuthorized
+	}
+
+	_, err := db.Exec(
+		`UPDATE workouts
+		SET start_time = $1, end_time = $2
+		WHERE id = $3`,
+		workout.Start.Time, workout.End.Time, workout.ID,
+	)
+	return err
+}
+
+func (db *DB) DeleteWorkout(workoutID int) error {
+	_, err := db.Exec(
+		`DELETE FROM workouts WHERE id = $1`,
+		workoutID,
 	)
 	return err
 }
@@ -151,3 +192,4 @@ func (db *DB) rowExists(query string, args ...interface{}) bool {
 var ErrUserAlreadyExists = errors.New("datastore: a user with the given name already exists")
 var ErrUserNotFound = errors.New("datastore: a user with the given information could not be found")
 var ErrInvalidCredentials = errors.New("datastore: the user's credentials did not match")
+var ErrUserNotAuthorized = errors.New("datastore: the user does not have access to modify the workout")

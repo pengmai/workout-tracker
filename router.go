@@ -18,6 +18,30 @@ type Route struct {
 func (env *Env) NewRouter() *httprouter.Router {
 	routes := []Route{
 		{
+			"Index",
+			"GET",
+			"/",
+			GetIndex,
+		},
+		{
+			"Icon",
+			"GET",
+			"/favicon.ico",
+			GetIcon,
+		},
+		{
+			"Styles",
+			"GET",
+			"/main.css",
+			GetStyles,
+		},
+		{
+			"Gopher",
+			"GET",
+			"/gopher.gif",
+			GetGopher,
+		},
+		{
 			"SignUp",
 			"POST",
 			"/signup",
@@ -34,6 +58,18 @@ func (env *Env) NewRouter() *httprouter.Router {
 			"POST",
 			"/workout",
 			env.AddWorkout,
+		},
+		{
+			"UpdateWorkout",
+			"PUT",
+			"/workout",
+			env.UpdateWorkout,
+		},
+		{
+			"DeleteWorkout",
+			"DELETE",
+			"/workout/:id",
+			env.DeleteWorkout,
 		},
 	}
 

@@ -22,6 +22,7 @@ type User struct {
 
 // Workout represents a single workout.
 type Workout struct {
+	ID    int        `json:"id"`
 	User  int        `json:"user,omitempty"`
 	Start CustomTime `json:"start"`
 	End   CustomTime `json:"end"`

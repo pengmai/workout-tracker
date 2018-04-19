@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="theme-color" content="#000000">
+		<title>
+			{{if .Name -}}
+			{{.Name}}
+			{{- else -}}
+			Go Application
+			{{- end}}
+		</title>
+		<link rel="stylesheet" href="/main.css">
+	</head>
+	<body>
+		<div class="well">
+			<h1>
+				{{if .Name -}}{{.Name}}{{- else -}}Your Go application{{- end}} is running.
+			</h1>
+			<img src="/gopher.gif" alt="Hooray!" />
+		</div>
+	</body>
+</html>
