@@ -248,10 +248,6 @@ func GetIcon(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	http.ServeFile(w, r, "./static/favicon.ico")
 }
 
-func GetStyles(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	http.ServeFile(w, r, "./static/main.css")
-}
-
 func GetGopher(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	http.ServeFile(w, r, "./static/coffee-gopher.gif")
 }

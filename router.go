@@ -30,12 +30,6 @@ func (env *Env) NewRouter() *httprouter.Router {
 			GetIcon,
 		},
 		{
-			"Styles",
-			"GET",
-			"/main.css",
-			GetStyles,
-		},
-		{
 			"Gopher",
 			"GET",
 			"/gopher.gif",
