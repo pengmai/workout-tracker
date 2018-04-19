@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
 	"os"
 	"strings"
 
@@ -19,21 +18,10 @@ type Config struct {
 // ReadConfig populates a Config struct from environment variables.
 func ReadConfig() (Config, error) {
 	empty := Config{}
-	username := os.Getenv("DB_USER")
-	if username == "" {
-		return empty, errors.New("missing environment variable 'DB_USER'")
-	}
-	password := os.Getenv("DB_PASS")
-	if password == "" {
-		return empty, errors.New("missing environment variable 'DB_PASS'")
-	}
-	name := os.Getenv("DB_NAME")
-	if name == "" {
-		return empty, errors.New("missing environment variable 'DB_NAME'")
-	}
-	server := os.Getenv("DB_SERVER")
-	if server == "" {
-		return empty, errors.New("missing environment variable 'DB_SERVER'")
+
+	connectionString := os.Getenv("DATABASE_URL")
+	if connectionString == "" {
+		return empty, errors.New("missing environment variable 'DATABASE_URL'")
 	}
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -58,13 +46,7 @@ func ReadConfig() (Config, error) {
 		logLevel = logrus.PanicLevel
 	}
 	return Config{
-		fmt.Sprintf(
-			"user=%s password=%s dbname=%s host=%s sslmode=verify-full",
-			username,
-			password,
-			name,
-			server,
-		),
+		connectionString,
 		port,
 		logLevel,
 	}, nil
