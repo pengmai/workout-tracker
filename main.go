@@ -15,12 +15,12 @@ type Env struct {
 }
 
 func main() {
+	log.SetOutput(os.Stdout)
 	c, err := ReadConfig()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.SetOutput(os.Stdout)
 	log.SetLevel(c.logLevel)
 
 	db, err := InitializeDB("postgres", c.dbConnectionString)
