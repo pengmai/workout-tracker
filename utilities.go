@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/julienschmidt/httprouter"
+	log "github.com/sirupsen/logrus"
 )
 
 /* HTTP Middleware */
@@ -18,32 +19,31 @@ func (env *Env) loggerMiddleware(name string, handle httprouter.Handle) httprout
 
 		handle(w, r, ps)
 
-		env.logger.Printf(
-			"%s\t%s\t%s\t%s",
-			r.Method,
-			r.RequestURI,
-			name,
-			time.Since(start),
-		)
+		log.WithFields(log.Fields{
+			"method":      r.Method,
+			"URI":         r.RequestURI,
+			"handler":     name,
+			"finished in": time.Since(start),
+		}).Info("Finished request")
 	}
 }
 
 /* Functions to create JSON responses */
-func (env *Env) internalServerError(w http.ResponseWriter, err error) {
-	env.respondWithError(w, http.StatusInternalServerError, err,
+func internalServerError(w http.ResponseWriter, err error) {
+	respondWithError(w, http.StatusInternalServerError, err,
 		"Unable to process request")
 }
 
-func (env *Env) respondWithError(w http.ResponseWriter, code int, err error,
+func respondWithError(w http.ResponseWriter, code int, err error,
 	message string) {
-	env.logger.Println(err)
-	env.respondWithJSON(w, code, map[string]string{"error": message})
+	log.WithError(err).Error("An error occurred")
+	respondWithJSON(w, code, map[string]string{"error": message})
 }
 
-func (env *Env) respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
+func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	response, err := json.Marshal(payload)
 	if err != nil {
-		env.internalServerError(w, err)
+		internalServerError(w, err)
 	}
 
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")

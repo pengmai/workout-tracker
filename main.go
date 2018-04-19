@@ -1,34 +1,36 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"os"
 
 	_ "github.com/lib/pq"
+	log "github.com/sirupsen/logrus"
 )
 
-// Env stores the datastore, logger, and other resources shared by goroutines
+// Env stores the datastore and other resources shared by goroutines
 // in the application.
 type Env struct {
-	db     Datastore
-	logger *log.Logger
+	db Datastore
 }
 
 func main() {
-	logger := log.New(os.Stdout, "workit-api: ", log.LstdFlags)
 	c, err := ReadConfig()
 	if err != nil {
-		logger.Fatal(err)
+		log.Fatal(err)
 	}
+
+	log.SetOutput(os.Stdout)
+	log.SetLevel(c.logLevel)
+
 	db, err := InitializeDB("postgres", c.dbConnectionString)
 	if err != nil {
-		logger.Fatal(err)
+		log.Fatal(err)
 	}
 
-	env := &Env{db, logger}
+	env := &Env{db}
 	router := env.NewRouter()
 
-	logger.Printf("Server listening on port %s", c.port)
-	logger.Fatal(http.ListenAndServe(":"+c.port, router))
+	log.WithField("port", c.port).Info("Server started")
+	log.Fatal(http.ListenAndServe(":"+c.port, router))
 }

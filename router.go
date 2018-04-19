@@ -1,6 +1,8 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -43,6 +45,9 @@ func (env *Env) NewRouter() *httprouter.Router {
 			env.loggerMiddleware(route.Name, route.Handle),
 		)
 	}
+
+	router.NotFound = http.HandlerFunc(NotFound)
+	router.MethodNotAllowed = http.HandlerFunc(MethodNotAllowed)
 
 	return router
 }

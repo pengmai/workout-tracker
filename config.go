@@ -4,17 +4,21 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strings"
+
+	"github.com/sirupsen/logrus"
 )
 
 // Config represents the configuration information for our app.
 type Config struct {
 	dbConnectionString string
 	port               string
+	logLevel           logrus.Level
 }
 
 // ReadConfig populates a Config struct from environment variables.
 func ReadConfig() (Config, error) {
-	empty := Config{"", ""}
+	empty := Config{}
 	username := os.Getenv("DB_USER")
 	if username == "" {
 		return empty, errors.New("missing environment variable 'DB_USER'")
@@ -35,6 +39,24 @@ func ReadConfig() (Config, error) {
 	if port == "" {
 		port = "8080"
 	}
+
+	var logLevel logrus.Level
+	switch strings.ToUpper(os.Getenv("LOG_LEVEL")) {
+	case "":
+		fallthrough
+	case "DEBUG":
+		logLevel = logrus.DebugLevel
+	case "INFO":
+		logLevel = logrus.InfoLevel
+	case "WARN":
+		logLevel = logrus.WarnLevel
+	case "ERROR":
+		logLevel = logrus.ErrorLevel
+	case "FATAL":
+		logLevel = logrus.FatalLevel
+	case "PANIC":
+		logLevel = logrus.PanicLevel
+	}
 	return Config{
 		fmt.Sprintf(
 			"user=%s password=%s dbname=%s host=%s sslmode=verify-full",
@@ -44,5 +66,6 @@ func ReadConfig() (Config, error) {
 			server,
 		),
 		port,
+		logLevel,
 	}, nil
 }
