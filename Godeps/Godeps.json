@@ -1,0 +1,42 @@
+{
+	"ImportPath": "github.com/pengmai/workout-api",
+	"GoVersion": "go1.10",
+	"GodepVersion": "v80",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/julienschmidt/httprouter",
+			"Comment": "v1.1-55-ge1b9828",
+			"Rev": "e1b9828bc9e5904baec057a154c09ca40fe7fae0"
+		},
+		{
+			"ImportPath": "github.com/lib/pq",
+			"Comment": "go1.0-cutoff-210-gd34b9ff",
+			"Rev": "d34b9ff171c21ad295489235aec8b6626023cd04"
+		},
+		{
+			"ImportPath": "github.com/lib/pq/oid",
+			"Comment": "go1.0-cutoff-210-gd34b9ff",
+			"Rev": "d34b9ff171c21ad295489235aec8b6626023cd04"
+		},
+		{
+			"ImportPath": "github.com/sirupsen/logrus",
+			"Comment": "v1.0.5-16-g778f2e7",
+			"Rev": "778f2e774c725116edbc3d039dc0dfc1cc62aae8"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/ssh/terminal",
+			"Rev": "d6449816ce06963d9d136eee5a56fca5b0616e7e"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/unix",
+			"Rev": "9b006099084093fa764af5878f937ff7dafc6051"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/windows",
+			"Rev": "9b006099084093fa764af5878f937ff7dafc6051"
+		}
+	]
+}
