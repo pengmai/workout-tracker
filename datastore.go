@@ -11,7 +11,7 @@ type Datastore interface {
 	LoginWithCredentials(name, passHash string) (User, error)
 	LoginWithToken(token string) (User, error)
 	GetUsername(userID int) (string, error)
-	AddWorkout(workout Workout) error
+	AddWorkout(workout Workout) (int, error)
 	UpdateWorkout(workout Workout) error
 	DeleteWorkout(workoutID int) error
 	GetWorkouts(userID int) ([]Workout, error)
@@ -92,17 +92,18 @@ func (db *DB) GetUsername(userID int) (string, error) {
 	}
 }
 
-func (db *DB) AddWorkout(workout Workout) error {
+func (db *DB) AddWorkout(workout Workout) (int, error) {
 	if !db.rowExists("SELECT id FROM users WHERE id = $1", workout.User) {
-		return ErrUserNotFound
+		return 0, ErrUserNotFound
 	}
 
-	_, err := db.Exec(
+	var workoutID int
+	err := db.QueryRow(
 		`INSERT INTO workouts(user_id, start_time, end_time)
-		VALUES ($1, $2, $3)`,
+		VALUES ($1, $2, $3) RETURNING id`,
 		workout.User, workout.Start.Time, workout.End.Time,
-	)
-	return err
+	).Scan(&workoutID)
+	return workoutID, err
 }
 
 func (db *DB) UpdateWorkout(workout Workout) error {
@@ -138,11 +139,11 @@ func (db *DB) GetWorkouts(userID int) ([]Workout, error) {
 	err := db.readRows(
 		func(rs *sql.Rows) error {
 			var workout Workout
-			readErr := rs.Scan(&workout.Start.Time, &workout.End.Time)
+			readErr := rs.Scan(&workout.ID, &workout.Start.Time, &workout.End.Time)
 			workouts = append(workouts, workout)
 			return readErr
 		},
-		"SELECT start_time, end_time FROM workouts WHERE user_id = $1",
+		"SELECT id, start_time, end_time FROM workouts WHERE user_id = $1",
 		userID,
 	)
 	return workouts, err

@@ -29,21 +29,21 @@ func (env *Env) loggerMiddleware(name string, handle httprouter.Handle) httprout
 }
 
 /* Functions to create JSON responses */
-func internalServerError(w http.ResponseWriter, err error) {
-	respondWithError(w, http.StatusInternalServerError, err,
+func InternalServerError(w http.ResponseWriter, err error) {
+	WriteError(w, http.StatusInternalServerError, err,
 		"Unable to process request")
 }
 
-func respondWithError(w http.ResponseWriter, code int, err error,
+func WriteError(w http.ResponseWriter, code int, err error,
 	message string) {
 	log.WithError(err).Error("An error occurred")
-	respondWithJSON(w, code, map[string]string{"error": message})
+	WriteJSON(w, code, map[string]string{"error": message})
 }
 
-func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
+func WriteJSON(w http.ResponseWriter, code int, payload interface{}) {
 	response, err := json.Marshal(payload)
 	if err != nil {
-		internalServerError(w, err)
+		InternalServerError(w, err)
 	}
 
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
