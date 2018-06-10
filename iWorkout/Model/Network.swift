@@ -13,13 +13,6 @@ enum Result <Value> {
     case failure(Error)
 }
 
-struct WorkoutRequest: Encodable {
-    var id: Int
-    var user: Int
-    var start: Date
-    var end: Date
-}
-
 struct WorkoutResponse: Decodable {
     var id: Int
 }

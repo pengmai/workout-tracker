@@ -2,7 +2,7 @@
 //  WorkoutViewController.swift
 //  iWorkout
 //
-//  Created by Abin Liu on 2018-04-18.
+//  Created by Jacob Peng on 2018-04-18.
 //  Copyright © 2018 Jacob Peng. All rights reserved.
 //
 
@@ -11,8 +11,6 @@ import UIKit
 class WorkoutViewController: UIViewController {
     // MARK: - Constants
     let minute: TimeInterval = 60
-    let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
 
     // MARK: - Properties
     @IBOutlet weak var segmentedControl: UISegmentedControl!
@@ -45,18 +43,6 @@ class WorkoutViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-
-    func showActivityIndicator() {
-        activityIndicator.removeFromSuperview()
-        effectView.removeFromSuperview()
-
-        effectView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
-        effectView.layer.masksToBounds = true
-        activityIndicator.frame = CGRect(x: view.bounds.midX - 50, y: view.bounds.midY - 50, width: 100, height: 100)
-        activityIndicator.startAnimating()
-        effectView.contentView.addSubview(activityIndicator)
-        view.addSubview(effectView)
     }
 
     // MARK: - Navigation
@@ -185,7 +171,7 @@ class WorkoutViewController: UIViewController {
     }
 
     private func saveWorkout(completion: @escaping () -> Void) {
-        showActivityIndicator()
+        let activityIndicator = showActivityIndicator()
 
         var start: UInt64
         var end: UInt64
@@ -210,7 +196,7 @@ class WorkoutViewController: UIViewController {
             case .failure(let error):
                 print("Could not save workout: \(error.localizedDescription)")
             }
-            self.effectView.removeFromSuperview()
+            activityIndicator.removeFromSuperview()
             completion()
         })
     }

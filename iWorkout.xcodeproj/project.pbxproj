@@ -18,6 +18,7 @@
 		AC4174AB20CDC8B7001545B1 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4174AA20CDC8B7001545B1 /* Network.swift */; };
 		AC4174AD20CDC9BD001545B1 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4174AC20CDC9BD001545B1 /* Errors.swift */; };
 		AC4174AF20CDD591001545B1 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4174AE20CDD591001545B1 /* Workout.swift */; };
+		AC4174B220CDEF58001545B1 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4174B120CDEF58001545B1 /* UIViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		AC4174AA20CDC8B7001545B1 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		AC4174AC20CDC9BD001545B1 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		AC4174AE20CDD591001545B1 /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
+		AC4174B120CDEF58001545B1 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 		AC1C9560208817F300C8822E /* iWorkout */ = {
 			isa = PBXGroup;
 			children = (
+				AC4174B020CDEF30001545B1 /* Extensions */,
 				AC4174A920CDC8A0001545B1 /* Model */,
 				AC1C9561208817F300C8822E /* AppDelegate.swift */,
 				AC1C9563208817F300C8822E /* ViewController.swift */,
@@ -143,6 +146,14 @@
 				AC4174AE20CDD591001545B1 /* Workout.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		AC4174B020CDEF30001545B1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AC4174B120CDEF58001545B1 /* UIViewController.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,6 +287,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC4174B220CDEF58001545B1 /* UIViewController.swift in Sources */,
 				AC1C95902088441400C8822E /* WorkoutViewController.swift in Sources */,
 				AC4174AD20CDC9BD001545B1 /* Errors.swift in Sources */,
 				AC1C9564208817F300C8822E /* ViewController.swift in Sources */,
