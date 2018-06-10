@@ -14,6 +14,10 @@
 		AC1C956C208817F600C8822E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC1C956A208817F600C8822E /* LaunchScreen.storyboard */; };
 		AC1C9577208817F600C8822E /* iWorkoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1C9576208817F600C8822E /* iWorkoutTests.swift */; };
 		AC1C9582208817F600C8822E /* iWorkoutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1C9581208817F600C8822E /* iWorkoutUITests.swift */; };
+		AC1C95902088441400C8822E /* WorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1C958F2088441400C8822E /* WorkoutViewController.swift */; };
+		AC4174AB20CDC8B7001545B1 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4174AA20CDC8B7001545B1 /* Network.swift */; };
+		AC4174AD20CDC9BD001545B1 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4174AC20CDC9BD001545B1 /* Errors.swift */; };
+		AC4174AF20CDD591001545B1 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4174AE20CDD591001545B1 /* Workout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +51,10 @@
 		AC1C957D208817F600C8822E /* iWorkoutUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iWorkoutUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC1C9581208817F600C8822E /* iWorkoutUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iWorkoutUITests.swift; sourceTree = "<group>"; };
 		AC1C9583208817F600C8822E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AC1C958F2088441400C8822E /* WorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewController.swift; sourceTree = "<group>"; };
+		AC4174AA20CDC8B7001545B1 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		AC4174AC20CDC9BD001545B1 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		AC4174AE20CDD591001545B1 /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,12 +105,14 @@
 		AC1C9560208817F300C8822E /* iWorkout */ = {
 			isa = PBXGroup;
 			children = (
+				AC4174A920CDC8A0001545B1 /* Model */,
 				AC1C9561208817F300C8822E /* AppDelegate.swift */,
 				AC1C9563208817F300C8822E /* ViewController.swift */,
 				AC1C9565208817F300C8822E /* Main.storyboard */,
 				AC1C9568208817F600C8822E /* Assets.xcassets */,
 				AC1C956A208817F600C8822E /* LaunchScreen.storyboard */,
 				AC1C956D208817F600C8822E /* Info.plist */,
+				AC1C958F2088441400C8822E /* WorkoutViewController.swift */,
 			);
 			path = iWorkout;
 			sourceTree = "<group>";
@@ -123,6 +133,16 @@
 				AC1C9583208817F600C8822E /* Info.plist */,
 			);
 			path = iWorkoutUITests;
+			sourceTree = "<group>";
+		};
+		AC4174A920CDC8A0001545B1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AC4174AA20CDC8B7001545B1 /* Network.swift */,
+				AC4174AC20CDC9BD001545B1 /* Errors.swift */,
+				AC4174AE20CDD591001545B1 /* Workout.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,8 +276,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC1C95902088441400C8822E /* WorkoutViewController.swift in Sources */,
+				AC4174AD20CDC9BD001545B1 /* Errors.swift in Sources */,
 				AC1C9564208817F300C8822E /* ViewController.swift in Sources */,
+				AC4174AB20CDC8B7001545B1 /* Network.swift in Sources */,
 				AC1C9562208817F300C8822E /* AppDelegate.swift in Sources */,
+				AC4174AF20CDD591001545B1 /* Workout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

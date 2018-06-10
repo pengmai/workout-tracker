@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  iWorkout
 //
-//  Created by Abin Liu on 2018-04-18.
+//  Created by Jacob Peng on 2018-04-18.
 //  Copyright © 2018 Jacob Peng. All rights reserved.
 //
 
