@@ -51,6 +51,7 @@ func (db *DB) SignUp(r UserRequest) (int, error) {
 	return userID, err
 }
 
+// LoginWithCredentials logs a user in using a name and password hash.
 func (db *DB) LoginWithCredentials(name, passHash string) (User, error) {
 	user := User{}
 	var ourPassHash string
@@ -68,6 +69,7 @@ func (db *DB) LoginWithCredentials(name, passHash string) (User, error) {
 	}
 }
 
+// LoginWithToken logs a user in using an access token.
 func (db *DB) LoginWithToken(token string) (User, error) {
 	user := User{}
 	row := db.QueryRow("SELECT id, name FROM users WHERE token = $1", token)
@@ -80,6 +82,7 @@ func (db *DB) LoginWithToken(token string) (User, error) {
 	}
 }
 
+// GetUsername retrieves the name of the user with the given ID.
 func (db *DB) GetUsername(userID int) (string, error) {
 	var name string
 	row := db.QueryRow("SELECT name FROM users WHERE id = $1", userID)
@@ -92,6 +95,7 @@ func (db *DB) GetUsername(userID int) (string, error) {
 	}
 }
 
+// AddWorkout adds a workout to the database.
 func (db *DB) AddWorkout(workout Workout) (int, error) {
 	if !db.rowExists("SELECT id FROM users WHERE id = $1", workout.User) {
 		return 0, ErrUserNotFound
@@ -106,6 +110,7 @@ func (db *DB) AddWorkout(workout Workout) (int, error) {
 	return workoutID, err
 }
 
+// UpdateWorkout replaces the workout with the given workout.
 func (db *DB) UpdateWorkout(workout Workout) error {
 	// Verify that the workout belongs to the user
 	var ourUser int
@@ -126,6 +131,7 @@ func (db *DB) UpdateWorkout(workout Workout) error {
 	return err
 }
 
+// DeleteWorkout deletes the workout with the specified ID.
 func (db *DB) DeleteWorkout(workoutID int) error {
 	_, err := db.Exec(
 		`DELETE FROM workouts WHERE id = $1`,
@@ -134,6 +140,7 @@ func (db *DB) DeleteWorkout(workoutID int) error {
 	return err
 }
 
+// GetWorkouts retrieves the list of workouts for the given user.
 func (db *DB) GetWorkouts(userID int) ([]Workout, error) {
 	workouts := make([]Workout, 0)
 	err := db.readRows(
@@ -190,7 +197,16 @@ func (db *DB) rowExists(query string, args ...interface{}) bool {
 }
 
 /* Custom error types */
+
+// ErrUserAlreadyExists is returned when a new account with an existing name is requested.
 var ErrUserAlreadyExists = errors.New("datastore: a user with the given name already exists")
+
+// ErrUserNotFound is returned when a user could not be found.
 var ErrUserNotFound = errors.New("datastore: a user with the given information could not be found")
+
+// ErrInvalidCredentials is returned when a user login fails.
 var ErrInvalidCredentials = errors.New("datastore: the user's credentials did not match")
+
+// ErrUserNotAuthorized is returned when a user requests an action that they do not have
+// access to.
 var ErrUserNotAuthorized = errors.New("datastore: the user does not have access to modify the workout")

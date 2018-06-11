@@ -53,6 +53,8 @@ func (env *Env) SignUp(w http.ResponseWriter, r *http.Request, ps httprouter.Par
 	})
 }
 
+// Login validates the credentials in the request body and returns the list of workouts
+// for the user.
 func (env *Env) Login(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -108,6 +110,7 @@ func (env *Env) Login(w http.ResponseWriter, r *http.Request, ps httprouter.Para
 	WriteJSON(w, http.StatusOK, LoginResponse{user, workouts})
 }
 
+// AddWorkout adds a workout to the datastore.
 func (env *Env) AddWorkout(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -155,6 +158,7 @@ func (env *Env) AddWorkout(w http.ResponseWriter, r *http.Request, ps httprouter
 	WriteJSON(w, http.StatusCreated, map[string]int{"id": workoutID})
 }
 
+// UpdateWorkout replaces the workout specified in the request body.
 func (env *Env) UpdateWorkout(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -212,6 +216,8 @@ func (env *Env) UpdateWorkout(w http.ResponseWriter, r *http.Request, ps httprou
 	w.WriteHeader(http.StatusNoContent)
 }
 
+// DeleteWorkout deletes the workout specified in the URL parameter. There is currently no
+// validation to ensure that the caller has access to do so.
 func (env *Env) DeleteWorkout(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	workoutString := ps.ByName("id")
 	workoutID, err := strconv.ParseInt(workoutString, 10, 32)
@@ -229,6 +235,8 @@ func (env *Env) DeleteWorkout(w http.ResponseWriter, r *http.Request, ps httprou
 }
 
 /* Landing page */
+
+// GetIndex serves the static html landing page.
 func GetIndex(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	type ApplicationMetadata struct {
 		Name string
@@ -244,14 +252,17 @@ func GetIndex(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	b.WriteTo(w)
 }
 
+// GetIcon returns the favicon.ico file.
 func GetIcon(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	http.ServeFile(w, r, "./static/favicon.ico")
 }
 
+// GetGopher gets the Go gif in the landing page.
 func GetGopher(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	http.ServeFile(w, r, "./static/coffee-gopher.gif")
 }
 
+// NotFound is a custom not found handler that logs the request data.
 func NotFound(w http.ResponseWriter, r *http.Request) {
 	log.WithFields(log.Fields{
 		"method": r.Method,
@@ -265,6 +276,7 @@ func NotFound(w http.ResponseWriter, r *http.Request) {
 	)
 }
 
+// MethodNotAllowed is a custom 405 handler that logs the request.
 func MethodNotAllowed(w http.ResponseWriter, r *http.Request) {
 	log.WithFields(log.Fields{
 		"method": r.Method,
