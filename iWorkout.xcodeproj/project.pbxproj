@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		278BB3ECC3972B6AD23D2DC9 /* Pods_iWorkout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29CD1417009AF977A1B13077 /* Pods_iWorkout.framework */; };
 		AC1C9562208817F300C8822E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1C9561208817F300C8822E /* AppDelegate.swift */; };
 		AC1C9564208817F300C8822E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1C9563208817F300C8822E /* ViewController.swift */; };
 		AC1C9567208817F300C8822E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC1C9565208817F300C8822E /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 		AC4174AD20CDC9BD001545B1 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4174AC20CDC9BD001545B1 /* Errors.swift */; };
 		AC4174AF20CDD591001545B1 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4174AE20CDD591001545B1 /* Workout.swift */; };
 		AC4174B220CDEF58001545B1 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4174B120CDEF58001545B1 /* UIViewController.swift */; };
+		ACAE3A55210511C80074F905 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAE3A54210511C80074F905 /* CalendarCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +40,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		ACAE3A52210508570074F905 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		29CD1417009AF977A1B13077 /* Pods_iWorkout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iWorkout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC1C955E208817F300C8822E /* iWorkout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iWorkout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC1C9561208817F300C8822E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AC1C9563208817F300C8822E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -57,6 +73,9 @@
 		AC4174AC20CDC9BD001545B1 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		AC4174AE20CDD591001545B1 /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		AC4174B120CDEF58001545B1 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		ACAE3A54210511C80074F905 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
+		DABC87DB63C21002943473B4 /* Pods-iWorkout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iWorkout.release.xcconfig"; path = "Pods/Target Support Files/Pods-iWorkout/Pods-iWorkout.release.xcconfig"; sourceTree = "<group>"; };
+		F95F2BBA968AF3B2728B56EC /* Pods-iWorkout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iWorkout.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iWorkout/Pods-iWorkout.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				278BB3ECC3972B6AD23D2DC9 /* Pods_iWorkout.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +104,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A1FFC174B4325C7703604D16 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29CD1417009AF977A1B13077 /* Pods_iWorkout.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		AC1C9555208817F300C8822E = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +119,8 @@
 				AC1C9575208817F600C8822E /* iWorkoutTests */,
 				AC1C9580208817F600C8822E /* iWorkoutUITests */,
 				AC1C955F208817F300C8822E /* Products */,
+				F84553C39440176402EFB722 /* Pods */,
+				A1FFC174B4325C7703604D16 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -116,6 +146,7 @@
 				AC1C956A208817F600C8822E /* LaunchScreen.storyboard */,
 				AC1C956D208817F600C8822E /* Info.plist */,
 				AC1C958F2088441400C8822E /* WorkoutViewController.swift */,
+				ACAE3A54210511C80074F905 /* CalendarCell.swift */,
 			);
 			path = iWorkout;
 			sourceTree = "<group>";
@@ -156,6 +187,15 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		F84553C39440176402EFB722 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F95F2BBA968AF3B2728B56EC /* Pods-iWorkout.debug.xcconfig */,
+				DABC87DB63C21002943473B4 /* Pods-iWorkout.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -163,9 +203,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AC1C9586208817F600C8822E /* Build configuration list for PBXNativeTarget "iWorkout" */;
 			buildPhases = (
+				761DCBABFC40611D021021AC /* [CP] Check Pods Manifest.lock */,
 				AC1C955A208817F300C8822E /* Sources */,
 				AC1C955B208817F300C8822E /* Frameworks */,
 				AC1C955C208817F300C8822E /* Resources */,
+				ACAE3A52210508570074F905 /* Embed Frameworks */,
+				BA6000961D558A48F5C4AF55 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -282,6 +325,47 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		761DCBABFC40611D021021AC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iWorkout-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BA6000961D558A48F5C4AF55 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-iWorkout/Pods-iWorkout-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
+				"${BUILT_PRODUCTS_DIR}/JTAppleCalendar/JTAppleCalendar.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JTAppleCalendar.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iWorkout/Pods-iWorkout-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		AC1C955A208817F300C8822E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -294,6 +378,7 @@
 				AC4174AB20CDC8B7001545B1 /* Network.swift in Sources */,
 				AC1C9562208817F300C8822E /* AppDelegate.swift in Sources */,
 				AC4174AF20CDD591001545B1 /* Workout.swift in Sources */,
+				ACAE3A55210511C80074F905 /* CalendarCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,6 +549,7 @@
 		};
 		AC1C9587208817F600C8822E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F95F2BBA968AF3B2728B56EC /* Pods-iWorkout.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -482,6 +568,7 @@
 		};
 		AC1C9588208817F600C8822E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DABC87DB63C21002943473B4 /* Pods-iWorkout.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

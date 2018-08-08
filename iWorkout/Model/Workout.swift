@@ -10,7 +10,7 @@ import Foundation
 
 class Workout: Codable {
     var id: Int
-    var user: Int
+    var user: Int?
     var start: UInt64
     var end: UInt64
 

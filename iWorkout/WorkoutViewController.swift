@@ -187,17 +187,20 @@ class WorkoutViewController: UIViewController {
             fatalError("Unexpected input on segmented control: \(segmentedControl.selectedSegmentIndex)")
         }
 
-        let workout = Workout(id: -1, user: 10, start: start, end: end)
+        let workout = Workout(id: -1, user: 2, start: start, end: end)
         Network.save(workout: workout, completion: { result in
+            activityIndicator.removeFromSuperview()
             switch result {
-            case .success(let id):
-                print("Saved workout with id \(id)")
-                workout.id = id
+            case .success(let resp):
+                print("Saved workout with id \(resp.id)")
+                workout.id = resp.id
+                completion()
             case .failure(let error):
+                let failureAlert = UIAlertController(title: "Something went wrong.", message: "Sorry, we couldn't save your workout. Please try again.", preferredStyle: .alert)
+                failureAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(failureAlert, animated: true)
                 print("Could not save workout: \(error.localizedDescription)")
             }
-            activityIndicator.removeFromSuperview()
-            completion()
         })
     }
 

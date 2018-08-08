@@ -13,16 +13,41 @@ enum Result <Value> {
     case failure(Error)
 }
 
+struct LoginRequest: Codable {
+    var token: String
+}
+
 struct WorkoutResponse: Decodable {
     var id: Int
 }
 
+struct User: Codable {
+    var id: Int
+    var name: String
+}
+
+struct LoginResponse: Codable {
+    var user: User
+    var workouts: [Workout]
+}
+
 class Network {
-    static func save(workout: Workout, completion: @escaping (Result<Int>) -> Void) {
+    static let baseUrl = "2180bdb6.ngrok.io"
+
+    static func loadInitialState(token: String, completion: @escaping (Result<LoginResponse>) -> Void) {
+        let request = LoginRequest(token: token)
+        sendHTTPRequest(verb: "POST", path: "/login", body: request, completion: completion)
+    }
+
+    static func save(workout: Workout, completion: @escaping (Result<WorkoutResponse>) -> Void) {
+        sendHTTPRequest(verb: "POST", path: "/workout", body: workout, completion: completion)
+    }
+
+    static func sendHTTPRequest<T: Codable, R: Decodable>(verb: String, path: String, body: T, completion: @escaping (Result<R>) -> Void) {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
-        urlComponents.host = "01ae8dad.ngrok.io"
-        urlComponents.path = "/workout"
+        urlComponents.host = baseUrl
+        urlComponents.path = path
 
         guard let url = urlComponents.url else {
             completion(.failure(WorkoutError.urlError))
@@ -30,20 +55,20 @@ class Network {
         }
 
         var request = URLRequest(url: url)
-        request.httpMethod = "POST"
+        request.httpMethod = verb
         var headers = request.allHTTPHeaderFields ?? [:]
         headers["Content-Type"] = "application/json"
         request.allHTTPHeaderFields = headers
 
         let encoder = JSONEncoder()
         do {
-            let workoutRequest = try encoder.encode(workout)
-            request.httpBody = workoutRequest
+            let requestBody = try encoder.encode(body)
+            request.httpBody = requestBody
         } catch {
             completion(.failure(error))
         }
 
-        let session = URLSession(configuration: URLSessionConfiguration.default)
+        let session = URLSession(configuration: .default)
         let task = session.dataTask(with: request) { (responseData, response, responseError) in
             DispatchQueue.main.async {
                 if let error = responseError {
@@ -52,8 +77,8 @@ class Network {
                     let decoder = JSONDecoder()
 
                     do {
-                        let workoutResponse = try decoder.decode(WorkoutResponse.self, from: jsonData)
-                        completion(.success(workoutResponse.id))
+                        let response = try decoder.decode(R.self, from: jsonData)
+                        completion(.success(response))
                     } catch {
                         completion(.failure(error))
                     }
