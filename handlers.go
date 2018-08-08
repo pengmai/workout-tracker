@@ -129,7 +129,7 @@ func (env *Env) AddWorkout(w http.ResponseWriter, r *http.Request, ps httprouter
 		return
 	}
 
-	if !workout.End.After(workout.Start.Time) {
+	if !workout.End.After(workout.Start) {
 		WriteError(
 			w,
 			http.StatusBadRequest,
@@ -180,7 +180,7 @@ func (env *Env) UpdateWorkout(w http.ResponseWriter, r *http.Request, ps httprou
 		return
 	}
 
-	if !workout.End.After(workout.Start.Time) {
+	if !workout.End.After(workout.Start) {
 		WriteError(
 			w,
 			http.StatusBadRequest,

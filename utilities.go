@@ -23,23 +23,30 @@ func (env *Env) loggerMiddleware(name string, handle httprouter.Handle) httprout
 			"method":      r.Method,
 			"URI":         r.RequestURI,
 			"handler":     name,
+			"user-agent":  r.Header.Get("User-Agent"),
 			"finished in": time.Since(start),
 		}).Info("Finished request")
 	}
 }
 
 /* Functions to create JSON responses */
+
+// InternalServerError is a shorthand to write a 500 internal server error to
+// the client.
 func InternalServerError(w http.ResponseWriter, err error) {
 	WriteError(w, http.StatusInternalServerError, err,
 		"Unable to process request")
 }
 
+// WriteError is a shorthand to write an error to the client.
 func WriteError(w http.ResponseWriter, code int, err error,
 	message string) {
 	log.WithError(err).Error("An error occurred")
 	WriteJSON(w, code, map[string]string{"error": message})
 }
 
+// WriteJSON is a shorthand to respond to the client with a payload to be
+// serialized to JSON.
 func WriteJSON(w http.ResponseWriter, code int, payload interface{}) {
 	response, err := json.Marshal(payload)
 	if err != nil {

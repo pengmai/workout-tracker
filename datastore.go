@@ -105,7 +105,7 @@ func (db *DB) AddWorkout(workout Workout) (int, error) {
 	err := db.QueryRow(
 		`INSERT INTO workouts(user_id, start_time, end_time)
 		VALUES ($1, $2, $3) RETURNING id`,
-		workout.User, workout.Start.Time, workout.End.Time,
+		workout.User, workout.Start, workout.End,
 	).Scan(&workoutID)
 	return workoutID, err
 }
@@ -126,7 +126,7 @@ func (db *DB) UpdateWorkout(workout Workout) error {
 		`UPDATE workouts
 		SET start_time = $1, end_time = $2
 		WHERE id = $3`,
-		workout.Start.Time, workout.End.Time, workout.ID,
+		workout.Start, workout.End, workout.ID,
 	)
 	return err
 }
@@ -146,7 +146,7 @@ func (db *DB) GetWorkouts(userID int) ([]Workout, error) {
 	err := db.readRows(
 		func(rs *sql.Rows) error {
 			var workout Workout
-			readErr := rs.Scan(&workout.ID, &workout.Start.Time, &workout.End.Time)
+			readErr := rs.Scan(&workout.ID, &workout.Start, &workout.End)
 			workouts = append(workouts, workout)
 			return readErr
 		},
