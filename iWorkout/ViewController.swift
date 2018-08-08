@@ -14,28 +14,28 @@ class ViewController: UIViewController {
     @IBOutlet weak var calendarHeader: UILabel!
     @IBOutlet weak var calendarView: JTAppleCalendarView!
 
+    var state: LoginResponse!
+
     let formatter = DateFormatter()
     let outsideMonthColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
     let monthColor = UIColor.black
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // TODO: - Remove this dummy code
-//        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
-//        label.center = CGPoint(x: 160, y: 285)
-//        label.textAlignment = .center
-//        label.text = "loading..."
-//        self.view.addSubview(label)
-//        Network.loadInitialState(token: "5FN/5uQhaN20J8TfiBDgsLm0+W58mpIoxE9G05AyQrs=", completion: {
-//            switch $0 {
-//            case .success(let resp):
-//                print("Response: \(resp as AnyObject)")
-//                label.text = "Hello, \(resp.user.name)!"
-//            case .failure(let err):
-//                print("Error: \(err)")
-//                label.text = "Error: \(err)"
-//            }
-//        })
+
+        let activityIndicator = showActivityIndicator()
+        let token = "5FN/5uQhaN20J8TfiBDgsLm0+W58mpIoxE9G05AyQrs="
+        Network.loadInitialState(token: token, completion: {
+            activityIndicator.removeFromSuperview()
+            switch $0 {
+            case .success(let resp):
+                print("Response: \(resp as AnyObject)")
+                self.state = resp
+            case .failure(let err):
+                print("Error: \(err)")
+            }
+        })
+
         // Do any additional setup after loading the view, typically from a nib.
         setupCalendarView()
     }
@@ -63,12 +63,12 @@ extension ViewController: JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSo
         formatter.timeZone = Calendar.current.timeZone
         formatter.locale = Calendar.current.locale
 
-        let startDate = formatter.date(from: "2018 07 01")!
-        let endDate = formatter.date(from: "2018 09 01")!
+        let startDate = formatter.date(from: "2018 04 01")!
+        let now = Date()
 
         return ConfigurationParameters(
             startDate: startDate,
-            endDate: endDate,
+            endDate: now,
             generateOutDates: .tillEndOfRow
         )
     }

@@ -221,30 +221,41 @@
                                             <constraint firstAttribute="height" constant="343" id="jkk-rX-DQs"/>
                                         </constraints>
                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="kWM-XW-x4z">
-                                            <size key="itemSize" width="129" height="123"/>
+                                            <size key="itemSize" width="291" height="287"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CalendarCell" id="pPf-vV-h2m" customClass="CalendarCell" customModule="iWorkout" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="129" height="123"/>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="CalendarCell" id="pPf-vV-h2m" customClass="CalendarCell" customModule="iWorkout" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="291" height="287"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                                    <rect key="frame" x="0.0" y="0.0" width="129" height="123"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="291" height="287"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFK-et-Ljz">
-                                                            <rect key="frame" x="43.5" y="51" width="42" height="21"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="icR-1Y-lll">
+                                                            <rect key="frame" x="22.932421410239215" y="19.475794663894362" width="83.000000000000057" height="84.500000000000014"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFK-et-Ljz">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="42" height="20.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="•" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="42" translatesAutoresizingMaskIntoConstraints="NO" id="o85-WT-RzX">
+                                                                    <rect key="frame" x="0.0" y="20.5" width="42" height="20.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
                                                     </subviews>
                                                 </view>
                                                 <constraints>
-                                                    <constraint firstItem="mFK-et-Ljz" firstAttribute="centerY" secondItem="pPf-vV-h2m" secondAttribute="centerY" id="1Zz-F2-pWk"/>
-                                                    <constraint firstItem="mFK-et-Ljz" firstAttribute="centerX" secondItem="pPf-vV-h2m" secondAttribute="centerX" id="g4X-04-89l"/>
+                                                    <constraint firstItem="icR-1Y-lll" firstAttribute="centerY" secondItem="pPf-vV-h2m" secondAttribute="centerY" id="MBo-bl-NIy"/>
+                                                    <constraint firstItem="icR-1Y-lll" firstAttribute="centerX" secondItem="pPf-vV-h2m" secondAttribute="centerX" id="YI6-r3-Hpn"/>
                                                 </constraints>
                                                 <connections>
                                                     <outlet property="dateLabel" destination="mFK-et-Ljz" id="an3-NQ-TkZ"/>

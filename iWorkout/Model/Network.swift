@@ -32,7 +32,7 @@ struct LoginResponse: Codable {
 }
 
 class Network {
-    static let baseUrl = "2180bdb6.ngrok.io"
+    static let baseUrl = "85e5cb98.ngrok.io"
 
     static func loadInitialState(token: String, completion: @escaping (Result<LoginResponse>) -> Void) {
         let request = LoginRequest(token: token)
