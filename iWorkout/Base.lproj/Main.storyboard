@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fI3-9Z-dhb">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -133,6 +133,22 @@
             </objects>
             <point key="canvasLocation" x="2576.25" y="225"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="5sV-TT-9EJ">
+            <objects>
+                <navigationController id="fI3-9Z-dhb" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="RT0-ax-JxM">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="VkF-I0-AKU"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2i9-aw-GJI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-271" y="133"/>
+        </scene>
         <!--Ib Calendar Data Source-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -153,7 +169,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="cJI-TV-8JR">
-                                <rect key="frame" x="16" y="36" width="343" height="404.5"/>
+                                <rect key="frame" x="16" y="80" width="343" height="404.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="August 2018" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zJ7-fm-NIW">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="41"/>
@@ -259,6 +275,7 @@
                                                 </constraints>
                                                 <connections>
                                                     <outlet property="dateLabel" destination="mFK-et-Ljz" id="an3-NQ-TkZ"/>
+                                                    <outlet property="withWorkout" destination="o85-WT-RzX" id="gf4-8s-LuY"/>
                                                 </connections>
                                             </collectionViewCell>
                                         </cells>
@@ -284,9 +301,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Your Workouts" id="iou-iu-BP0">
+                        <barButtonItem key="leftBarButtonItem" title="Log out" id="Mgu-L7-299"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="calendarHeader" destination="zJ7-fm-NIW" id="V3F-aA-WEd"/>
                         <outlet property="calendarView" destination="3du-Xn-rmZ" id="x6D-WN-z9x"/>
+                        <outlet property="headerLabel" destination="iou-iu-BP0" id="L9M-aY-w84"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

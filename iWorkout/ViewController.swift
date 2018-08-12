@@ -13,8 +13,10 @@ class ViewController: UIViewController {
     // MARK: - Properties
     @IBOutlet weak var calendarHeader: UILabel!
     @IBOutlet weak var calendarView: JTAppleCalendarView!
+    @IBOutlet weak var headerLabel: UINavigationItem!
 
-    var state: LoginResponse!
+    var workouts = [Workout]()
+    var user: User!
 
     let formatter = DateFormatter()
     let outsideMonthColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
@@ -30,9 +32,12 @@ class ViewController: UIViewController {
             switch $0 {
             case .success(let resp):
                 print("Response: \(resp as AnyObject)")
-                self.state = resp
+                self.workouts = resp.workouts
+                self.user = resp.user
+                self.headerLabel.title = "\(resp.user.name)'s Workouts"
             case .failure(let err):
                 print("Error: \(err)")
+                self.displayAlert(title: "Something went wrong.", message: "We weren't able to load your workouts.")
             }
         })
 
@@ -42,6 +47,7 @@ class ViewController: UIViewController {
 
     private func setupCalendarView() {
         calendarView.visibleDates(handleCalendarHeader)
+        calendarView.scrollToDate(Date())
     }
 
     private func handleCalendarHeader(visibleDates: DateSegmentInfo) {
@@ -52,7 +58,31 @@ class ViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    }
+
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let destination = segue.destination as? UINavigationController else {
+            fatalError("Segue destination was not a UINavigationController as expected")
+        }
+
+        if let target = destination.topViewController as? WorkoutViewController {
+            target.addWorkoutDelegate = self
+            target.user = user.id
+        }
+    }
+}
+
+// MARK: - Add Workout Delegate
+protocol AddWorkoutDelegate: class {
+    func add(workout: Workout)
+}
+
+extension ViewController: AddWorkoutDelegate {
+    func add(workout: Workout) {
+        workouts.append(workout)
+        calendarView.reloadDates([workout.end])
+        calendarView.scrollToDate(workout.end)
     }
 }
 
@@ -79,8 +109,10 @@ extension ViewController: JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSo
     }
 
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        print(date)
-        print(cellState)
+        let thisDaysWorkouts = workouts.filter { date.isSameDayAs($0.end) }
+        if thisDaysWorkouts.count > 0 {
+            displayAlert(title: "Workouts on this day", message: thisDaysWorkouts.description)
+        }
     }
 
     func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
@@ -95,15 +127,20 @@ extension ViewController: JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSo
 
     func configureVisibleCell(cell: CalendarCell, cellState: CellState, date: Date) {
         cell.dateLabel.text = cellState.text
+        cell.withWorkout.textColor = .white
 
         if cellState.dateBelongsTo == .thisMonth {
-            if Calendar.current.compare(date, to: Date(), toGranularity: .day) == .orderedSame {
+            if date.isSameDayAs(Date()) {
                 cell.dateLabel.textColor = .red
             } else {
                 cell.dateLabel.textColor = monthColor
             }
         } else {
             cell.dateLabel.textColor = outsideMonthColor
+        }
+
+        if workouts.contains(where: { date.isSameDayAs($0.end) }) {
+            cell.withWorkout.textColor = .blue
         }
     }
 }

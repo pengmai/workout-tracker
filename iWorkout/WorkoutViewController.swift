@@ -21,9 +21,11 @@ class WorkoutViewController: UIViewController {
     @IBOutlet weak var startTimePicker: UIDatePicker!
     @IBOutlet weak var endTimePicker: UIDatePicker!
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    weak var addWorkoutDelegate: AddWorkoutDelegate?
 
     var running = false
     var timer = Timer()
+    var user: Int!
     var numberOfSeconds: Int = 0
 
     override func viewDidLoad() {
@@ -59,9 +61,7 @@ class WorkoutViewController: UIViewController {
 
     @IBAction func save(_ sender: UIBarButtonItem) {
         if numberOfSeconds == 0 && segmentedControl.selectedSegmentIndex == 0 {
-            let noWorkoutAlert = UIAlertController(title: "Please enter a workout.", message: "You can enter a workout via the timer or the supplied date pickers.", preferredStyle: .alert)
-            noWorkoutAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            present(noWorkoutAlert, animated: true)
+            self.displayAlert(title: "Please enter a workout.", message: "You can enter a workout via the timer or the supplied date pickers.")
             return
         } else if (running) {
             stopTimer()
@@ -69,7 +69,10 @@ class WorkoutViewController: UIViewController {
 
         let confirmationAlert = UIAlertController(title: "Save this workout?", message: "", preferredStyle: .alert)
         confirmationAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: {action in
-            self.saveWorkout(completion: { self.dismiss(animated: true, completion: nil) })
+            self.saveWorkout(completion: {
+                self.addWorkoutDelegate?.add(workout: $0)
+                self.dismiss(animated: true, completion: nil)
+            })
         }))
         confirmationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(confirmationAlert, animated: true)
@@ -114,14 +117,6 @@ class WorkoutViewController: UIViewController {
             startTimePicker.setDate(sender.date - minute, animated: true)
         }
     }
-
-    /*
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     // MARK: Private methods
     private func showStopwatch() {
@@ -170,35 +165,33 @@ class WorkoutViewController: UIViewController {
         resetButton.layer.borderColor = #colorLiteral(red: 0.6666666865, green: 0.6666666865, blue: 0.6666666865, alpha: 1)
     }
 
-    private func saveWorkout(completion: @escaping () -> Void) {
+    private func saveWorkout(completion: @escaping (_ workout: Workout) -> Void) {
         let activityIndicator = showActivityIndicator()
 
-        var start: UInt64
-        var end: UInt64
+        var start: Date
+        var end: Date
         // Calculate start and end based on the current visible screen as seconds since the unix epoch.
         switch segmentedControl.selectedSegmentIndex {
         case 0:
-            end = UInt64(Date().timeIntervalSince1970)
-            start = end - UInt64(numberOfSeconds)
+            end = Date()
+            start = Date(timeInterval: TimeInterval(-numberOfSeconds), since: end)
         case 1:
-            start = UInt64(startTimePicker.date.timeIntervalSince1970)
-            end = UInt64(endTimePicker.date.timeIntervalSince1970)
+            start = startTimePicker.date
+            end = endTimePicker.date
         default:
             fatalError("Unexpected input on segmented control: \(segmentedControl.selectedSegmentIndex)")
         }
 
-        let workout = Workout(id: -1, user: 2, start: start, end: end)
+        let workout = Workout(id: -1, user: user, start: start, end: end)
         Network.save(workout: workout, completion: { result in
             activityIndicator.removeFromSuperview()
             switch result {
             case .success(let resp):
                 print("Saved workout with id \(resp.id)")
                 workout.id = resp.id
-                completion()
+                completion(workout)
             case .failure(let error):
-                let failureAlert = UIAlertController(title: "Something went wrong.", message: "Sorry, we couldn't save your workout. Please try again.", preferredStyle: .alert)
-                failureAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(failureAlert, animated: true)
+                self.displayAlert(title: "Something went wrong.", message: "Sorry, we couldn't save your workout. Please try again.")
                 print("Could not save workout: \(error.localizedDescription)")
             }
         })

@@ -32,7 +32,7 @@ struct LoginResponse: Codable {
 }
 
 class Network {
-    static let baseUrl = "85e5cb98.ngrok.io"
+    static let baseUrl = "e047b6a8.ngrok.io"
 
     static func loadInitialState(token: String, completion: @escaping (Result<LoginResponse>) -> Void) {
         let request = LoginRequest(token: token)
@@ -61,6 +61,7 @@ class Network {
         request.allHTTPHeaderFields = headers
 
         let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
         do {
             let requestBody = try encoder.encode(body)
             request.httpBody = requestBody
@@ -75,6 +76,7 @@ class Network {
                     completion(.failure(error))
                 } else if let jsonData = responseData {
                     let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .iso8601
 
                     do {
                         let response = try decoder.decode(R.self, from: jsonData)

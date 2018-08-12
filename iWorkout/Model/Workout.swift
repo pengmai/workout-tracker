@@ -19,23 +19,21 @@ class Workout: Codable, CustomStringConvertible {
 
     var id: Int
     var user: Int?
-    var start: UInt64
-    var end: UInt64
+    var start: Date
+    var end: Date
 
     var description: String {
-        let startDate = Date(timeIntervalSince1970: TimeInterval(start))
-        let endDate = Date(timeIntervalSince1970: TimeInterval(end))
         return """
             Workout:
             {
             \tid: \(id),
-            \tstart: \(Workout.formatter.string(from: startDate)),
-            \tend: \(Workout.formatter.string(from: endDate))
+            \tstart: \(Workout.formatter.string(from: start)),
+            \tend: \(Workout.formatter.string(from: end))
             }
             """
     }
 
-    init(id: Int, user: Int, start: UInt64, end: UInt64) {
+    init(id: Int, user: Int, start: Date, end: Date) {
         self.id = id
         self.user = user
         self.start = start
