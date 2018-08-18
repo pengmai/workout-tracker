@@ -21,6 +21,8 @@ struct WorkoutResponse: Decodable {
     var id: Int
 }
 
+struct NoContent: Decodable {}
+
 struct User: Codable {
     var id: Int
     var name: String
@@ -32,7 +34,7 @@ struct LoginResponse: Codable {
 }
 
 class Network {
-    static let baseUrl = "e047b6a8.ngrok.io"
+    static let baseUrl = "17b466a3.ngrok.io"
 
     static func loadInitialState(token: String, completion: @escaping (Result<LoginResponse>) -> Void) {
         let request = LoginRequest(token: token)
@@ -43,7 +45,11 @@ class Network {
         sendHTTPRequest(verb: "POST", path: "/workout", body: workout, completion: completion)
     }
 
-    static func sendHTTPRequest<T: Codable, R: Decodable>(verb: String, path: String, body: T, completion: @escaping (Result<R>) -> Void) {
+    static func update(workout: Workout, completion: @escaping (Result<NoContent>) -> Void) {
+        sendHTTPRequest(verb: "PUT", path: "/workout", body: workout, completion: completion, defaultValue: NoContent())
+    }
+
+    static func sendHTTPRequest<T: Codable, R: Decodable>(verb: String, path: String, body: T, completion: @escaping (Result<R>) -> Void, defaultValue: R? = nil) {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = baseUrl
@@ -74,15 +80,22 @@ class Network {
             DispatchQueue.main.async {
                 if let error = responseError {
                     completion(.failure(error))
-                } else if let jsonData = responseData {
-                    let decoder = JSONDecoder()
-                    decoder.dateDecodingStrategy = .iso8601
+                } else if let httpResponse = response as? HTTPURLResponse {
+                    if httpResponse.statusCode == 204, let defaultValue = defaultValue {
+                        completion(Result.success(defaultValue))
+                        return
+                    }
 
-                    do {
-                        let response = try decoder.decode(R.self, from: jsonData)
-                        completion(.success(response))
-                    } catch {
-                        completion(.failure(error))
+                    if let jsonData = responseData {
+                        let decoder = JSONDecoder()
+                        decoder.dateDecodingStrategy = .iso8601
+
+                        do {
+                            let resp = try decoder.decode(R.self, from: jsonData)
+                            completion(.success(resp))
+                        } catch {
+                            completion(.failure(error))
+                        }
                     }
                 } else {
                     completion(.failure(WorkoutError.networkError(message: "No data retrieved from the server")))

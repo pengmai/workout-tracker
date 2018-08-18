@@ -8,6 +8,7 @@
 
 import UIKit
 import JTAppleCalendar
+import os
 
 class ViewController: UIViewController {
     // MARK: - Properties
@@ -15,7 +16,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var calendarView: JTAppleCalendarView!
     @IBOutlet weak var headerLabel: UINavigationItem!
 
-    var workouts = [Workout]()
+    var workouts = [Date: [Workout]]()
     var user: User!
 
     let formatter = DateFormatter()
@@ -31,12 +32,12 @@ class ViewController: UIViewController {
             activityIndicator.removeFromSuperview()
             switch $0 {
             case .success(let resp):
-                print("Response: \(resp as AnyObject)")
-                self.workouts = resp.workouts
+                self.workouts = Dictionary(grouping: resp.workouts, by: { $0.end.getDay() })
                 self.user = resp.user
                 self.headerLabel.title = "\(resp.user.name)'s Workouts"
+                self.calendarView.reloadData()
             case .failure(let err):
-                print("Error: \(err)")
+                os_log("Unable to load workouts: %s", log: OSLog.default, type: .error, err.localizedDescription)
                 self.displayAlert(title: "Something went wrong.", message: "We weren't able to load your workouts.")
             }
         })
@@ -62,14 +63,45 @@ class ViewController: UIViewController {
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let destination = segue.destination as? UINavigationController else {
-            fatalError("Segue destination was not a UINavigationController as expected")
-        }
+        switch segue.identifier {
+            case "AddWorkout":
+                guard let destination = segue.destination as? UINavigationController,
+                    let target = destination.topViewController as? WorkoutViewController else {
+                    fatalError("Unable to retrieve WorkoutViewController for segue AddWorkout")
+                }
 
-        if let target = destination.topViewController as? WorkoutViewController {
-            target.addWorkoutDelegate = self
-            target.user = user.id
+                target.addWorkoutDelegate = self
+                target.shouldUnwindToTable = false
+                target.user = user.id
+            case "ListWorkouts":
+                guard let destination = segue.destination as? WorkoutTableViewController else {
+                    fatalError("Destination was not a WorkoutTableViewController for segue ListWorkouts")
+                }
+                guard let workouts = sender as? [Workout] else {
+                    fatalError("Did not receive list of workouts")
+                }
+
+                destination.workouts = workouts
+                destination.user = user.id
+                destination.updateWorkoutDelegate = self
+            case "ViewWorkout":
+                guard let destination = segue.destination as? WorkoutViewController else {
+                    fatalError("Destination was not a WorkoutViewController for segue ListWorkouts")
+                }
+                guard let workout = sender as? Workout else {
+                    fatalError("Did not receive workout")
+                }
+
+                destination.updateWorkoutDelegate = self
+                destination.shouldUnwindToTable = false
+                destination.workout = workout
+                destination.user = user.id
+            default:
+                fatalError("Unexpected segue identifier: \(segue.identifier ?? "nil")")
         }
+    }
+
+    @IBAction func returnToViewController(segue: UIStoryboardSegue) {
     }
 }
 
@@ -80,9 +112,47 @@ protocol AddWorkoutDelegate: class {
 
 extension ViewController: AddWorkoutDelegate {
     func add(workout: Workout) {
-        workouts.append(workout)
+        let day = workout.end.getDay()
+        if var workoutsForDay = workouts[day] {
+            workoutsForDay.append(workout)
+            workoutsForDay.sort { $0.end < $1.end }
+            workouts[day] = workoutsForDay
+        } else {
+            workouts[day] = [workout]
+        }
         calendarView.reloadDates([workout.end])
         calendarView.scrollToDate(workout.end)
+    }
+}
+
+// MARK: - Update Workout Delegate
+protocol UpdateWorkoutDelegate: class {
+    func update(workout: Workout)
+}
+
+extension ViewController: UpdateWorkoutDelegate {
+    func update(workout: Workout) {
+        // Flatten the dictionary of workouts.
+        var workoutList = workouts.reduce([]) { $0 + $1.value }
+        guard let i = workoutList.index(where: { $0.id == workout.id }) else {
+            fatalError("Tried to update a workout that wasn't in the list of workouts")
+        }
+
+        let previous = workoutList[i]
+        workoutList[i] = workout
+        workoutList.sort { $0.end < $1.end }
+        workouts = Dictionary(grouping: workoutList, by: { $0.end.getDay() })
+        calendarView.reloadDates([previous.end, workout.end])
+    }
+}
+
+// MARK: - Delete Workout Delegate
+protocol DeleteWorkoutDelegate: class {
+    func delete(workout: Workout)
+}
+
+extension ViewController: DeleteWorkoutDelegate {
+    func delete(workout: Workout) {
     }
 }
 
@@ -109,9 +179,12 @@ extension ViewController: JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSo
     }
 
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        let thisDaysWorkouts = workouts.filter { date.isSameDayAs($0.end) }
-        if thisDaysWorkouts.count > 0 {
-            displayAlert(title: "Workouts on this day", message: thisDaysWorkouts.description)
+        if let thisDaysWorkouts = workouts[date.getDay()] {
+            if thisDaysWorkouts.count > 1 {
+                performSegue(withIdentifier: "ListWorkouts", sender: thisDaysWorkouts)
+            } else if let first = thisDaysWorkouts.first {
+                performSegue(withIdentifier: "ViewWorkout", sender: first)
+            }
         }
     }
 
@@ -139,8 +212,12 @@ extension ViewController: JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSo
             cell.dateLabel.textColor = outsideMonthColor
         }
 
-        if workouts.contains(where: { date.isSameDayAs($0.end) }) {
-            cell.withWorkout.textColor = .blue
+        if let workoutsForDay = workouts[date.getDay()] {
+            if workoutsForDay.count == 1 {
+                cell.withWorkout.textColor = .blue
+            } else {
+                cell.withWorkout.textColor = .green
+            }
         }
     }
 }

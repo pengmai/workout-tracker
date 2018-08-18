@@ -26,17 +26,21 @@ class Workout: Codable, CustomStringConvertible {
         return """
             Workout:
             {
-            \tid: \(id),
+            \tid: \(id),\(user != nil ? "\n\t\(user!)" : "")
             \tstart: \(Workout.formatter.string(from: start)),
             \tend: \(Workout.formatter.string(from: end))
             }
             """
     }
 
-    init(id: Int, user: Int, start: Date, end: Date) {
+    init(id: Int, user: Int?, start: Date, end: Date) {
         self.id = id
         self.user = user
         self.start = start
         self.end = end
+    }
+
+    func copy() -> Workout {
+        return Workout(id: id, user: user, start: start, end: end)
     }
 }

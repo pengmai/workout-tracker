@@ -13,13 +13,18 @@
 		AC1C9567208817F300C8822E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC1C9565208817F300C8822E /* Main.storyboard */; };
 		AC1C9569208817F600C8822E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC1C9568208817F600C8822E /* Assets.xcassets */; };
 		AC1C956C208817F600C8822E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC1C956A208817F600C8822E /* LaunchScreen.storyboard */; };
-		AC1C9577208817F600C8822E /* iWorkoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1C9576208817F600C8822E /* iWorkoutTests.swift */; };
+		AC1C9577208817F600C8822E /* WorkoutViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1C9576208817F600C8822E /* WorkoutViewControllerTests.swift */; };
 		AC1C9582208817F600C8822E /* iWorkoutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1C9581208817F600C8822E /* iWorkoutUITests.swift */; };
 		AC1C95902088441400C8822E /* WorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1C958F2088441400C8822E /* WorkoutViewController.swift */; };
+		AC356CEF2120E6D700B7F531 /* WorkoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC356CED2120E6D700B7F531 /* WorkoutTableViewController.swift */; };
+		AC356CF02120E6D700B7F531 /* WorkoutTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC356CEE2120E6D700B7F531 /* WorkoutTableViewController.xib */; };
+		AC356CF82122522900B7F531 /* WorkoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC356CF62122522900B7F531 /* WorkoutTableViewCell.swift */; };
+		AC356CF92122522900B7F531 /* WorkoutTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC356CF72122522900B7F531 /* WorkoutTableViewCell.xib */; };
 		AC4174AB20CDC8B7001545B1 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4174AA20CDC8B7001545B1 /* Network.swift */; };
 		AC4174AD20CDC9BD001545B1 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4174AC20CDC9BD001545B1 /* Errors.swift */; };
 		AC4174AF20CDD591001545B1 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4174AE20CDD591001545B1 /* Workout.swift */; };
 		AC4174B220CDEF58001545B1 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4174B120CDEF58001545B1 /* UIViewController.swift */; };
+		AC4761262128673600A97BEA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4761252128673600A97BEA /* Extensions.swift */; };
 		AC8D521C211B8EA5005E63D0 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8D521B211B8EA5005E63D0 /* Date.swift */; };
 		ACAE3A55210511C80074F905 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAE3A54210511C80074F905 /* CalendarCell.swift */; };
 /* End PBXBuildFile section */
@@ -64,16 +69,21 @@
 		AC1C956B208817F600C8822E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AC1C956D208817F600C8822E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC1C9572208817F600C8822E /* iWorkoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iWorkoutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		AC1C9576208817F600C8822E /* iWorkoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iWorkoutTests.swift; sourceTree = "<group>"; };
+		AC1C9576208817F600C8822E /* WorkoutViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewControllerTests.swift; sourceTree = "<group>"; };
 		AC1C9578208817F600C8822E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC1C957D208817F600C8822E /* iWorkoutUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iWorkoutUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC1C9581208817F600C8822E /* iWorkoutUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iWorkoutUITests.swift; sourceTree = "<group>"; };
 		AC1C9583208817F600C8822E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC1C958F2088441400C8822E /* WorkoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewController.swift; sourceTree = "<group>"; };
+		AC356CED2120E6D700B7F531 /* WorkoutTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutTableViewController.swift; sourceTree = "<group>"; };
+		AC356CEE2120E6D700B7F531 /* WorkoutTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WorkoutTableViewController.xib; sourceTree = "<group>"; };
+		AC356CF62122522900B7F531 /* WorkoutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutTableViewCell.swift; sourceTree = "<group>"; };
+		AC356CF72122522900B7F531 /* WorkoutTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WorkoutTableViewCell.xib; sourceTree = "<group>"; };
 		AC4174AA20CDC8B7001545B1 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		AC4174AC20CDC9BD001545B1 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		AC4174AE20CDD591001545B1 /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		AC4174B120CDEF58001545B1 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		AC4761252128673600A97BEA /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		AC8D521B211B8EA5005E63D0 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		ACAE3A54210511C80074F905 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		DABC87DB63C21002943473B4 /* Pods-iWorkout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iWorkout.release.xcconfig"; path = "Pods/Target Support Files/Pods-iWorkout/Pods-iWorkout.release.xcconfig"; sourceTree = "<group>"; };
@@ -139,6 +149,7 @@
 		AC1C9560208817F300C8822E /* iWorkout */ = {
 			isa = PBXGroup;
 			children = (
+				AC356CF12120E72300B7F531 /* GUI */,
 				AC4174B020CDEF30001545B1 /* Extensions */,
 				AC4174A920CDC8A0001545B1 /* Model */,
 				AC1C9561208817F300C8822E /* AppDelegate.swift */,
@@ -147,7 +158,6 @@
 				AC1C9568208817F600C8822E /* Assets.xcassets */,
 				AC1C956A208817F600C8822E /* LaunchScreen.storyboard */,
 				AC1C956D208817F600C8822E /* Info.plist */,
-				AC1C958F2088441400C8822E /* WorkoutViewController.swift */,
 				ACAE3A54210511C80074F905 /* CalendarCell.swift */,
 			);
 			path = iWorkout;
@@ -156,8 +166,9 @@
 		AC1C9575208817F600C8822E /* iWorkoutTests */ = {
 			isa = PBXGroup;
 			children = (
-				AC1C9576208817F600C8822E /* iWorkoutTests.swift */,
+				AC1C9576208817F600C8822E /* WorkoutViewControllerTests.swift */,
 				AC1C9578208817F600C8822E /* Info.plist */,
+				AC4761252128673600A97BEA /* Extensions.swift */,
 			);
 			path = iWorkoutTests;
 			sourceTree = "<group>";
@@ -169,6 +180,34 @@
 				AC1C9583208817F600C8822E /* Info.plist */,
 			);
 			path = iWorkoutUITests;
+			sourceTree = "<group>";
+		};
+		AC356CF12120E72300B7F531 /* GUI */ = {
+			isa = PBXGroup;
+			children = (
+				AC356CF32120E75600B7F531 /* WorkoutDetail */,
+				AC356CF22120E73300B7F531 /* WorkoutTable */,
+			);
+			path = GUI;
+			sourceTree = "<group>";
+		};
+		AC356CF22120E73300B7F531 /* WorkoutTable */ = {
+			isa = PBXGroup;
+			children = (
+				AC356CED2120E6D700B7F531 /* WorkoutTableViewController.swift */,
+				AC356CEE2120E6D700B7F531 /* WorkoutTableViewController.xib */,
+				AC356CF62122522900B7F531 /* WorkoutTableViewCell.swift */,
+				AC356CF72122522900B7F531 /* WorkoutTableViewCell.xib */,
+			);
+			path = WorkoutTable;
+			sourceTree = "<group>";
+		};
+		AC356CF32120E75600B7F531 /* WorkoutDetail */ = {
+			isa = PBXGroup;
+			children = (
+				AC1C958F2088441400C8822E /* WorkoutViewController.swift */,
+			);
+			path = WorkoutDetail;
 			sourceTree = "<group>";
 		};
 		AC4174A920CDC8A0001545B1 /* Model */ = {
@@ -307,8 +346,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC1C956C208817F600C8822E /* LaunchScreen.storyboard in Resources */,
+				AC356CF02120E6D700B7F531 /* WorkoutTableViewController.xib in Resources */,
 				AC1C9569208817F600C8822E /* Assets.xcassets in Resources */,
 				AC1C9567208817F300C8822E /* Main.storyboard in Resources */,
+				AC356CF92122522900B7F531 /* WorkoutTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,9 +415,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC356CEF2120E6D700B7F531 /* WorkoutTableViewController.swift in Sources */,
 				AC4174B220CDEF58001545B1 /* UIViewController.swift in Sources */,
 				AC1C95902088441400C8822E /* WorkoutViewController.swift in Sources */,
 				AC4174AD20CDC9BD001545B1 /* Errors.swift in Sources */,
+				AC356CF82122522900B7F531 /* WorkoutTableViewCell.swift in Sources */,
 				AC1C9564208817F300C8822E /* ViewController.swift in Sources */,
 				AC4174AB20CDC8B7001545B1 /* Network.swift in Sources */,
 				AC1C9562208817F300C8822E /* AppDelegate.swift in Sources */,
@@ -390,7 +433,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC1C9577208817F600C8822E /* iWorkoutTests.swift in Sources */,
+				AC1C9577208817F600C8822E /* WorkoutViewControllerTests.swift in Sources */,
+				AC4761262128673600A97BEA /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

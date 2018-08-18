@@ -15,7 +15,7 @@
         <!--New Workout-->
         <scene sceneID="XL8-h8-QbV">
             <objects>
-                <viewController id="zst-4g-aUo" customClass="WorkoutViewController" customModule="iWorkout" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WorkoutViewController" id="zst-4g-aUo" customClass="WorkoutViewController" customModule="iWorkout" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qmT-mG-Bnu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -122,16 +122,20 @@
                     <connections>
                         <outlet property="StartTimePicker" destination="gqb-bR-VYa" id="AFr-Uw-ata"/>
                         <outlet property="endTimePicker" destination="IvJ-R5-z6R" id="U09-lx-e3m"/>
+                        <outlet property="navigationBar" destination="ZeZ-kH-VwJ" id="Y7L-VO-6xR"/>
                         <outlet property="resetButton" destination="j93-aN-XEQ" id="db4-30-2Yn"/>
                         <outlet property="saveButton" destination="n8m-Ct-8ED" id="B2h-fM-sDD"/>
                         <outlet property="segmentedControl" destination="hxg-5G-Tvt" id="uuW-uq-kfn"/>
                         <outlet property="startButton" destination="1t0-Y1-7wH" id="l1s-Y4-RCW"/>
                         <outlet property="stopWatchLabel" destination="ZV0-56-f7T" id="6FZ-Ev-AdX"/>
+                        <segue destination="R29-84-Hb2" kind="unwind" identifier="returnToViewController" unwindAction="returnToViewControllerWithSegue:" id="bTc-1f-Xiw"/>
+                        <segue destination="R29-84-Hb2" kind="unwind" identifier="returnToWorkoutTable" unwindAction="unwindToTableWithSegue:" id="2as-sS-f3j"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E0O-wF-bi9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="R29-84-Hb2" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2576.25" y="225"/>
+            <point key="canvasLocation" x="1465" y="904"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="5sV-TT-9EJ">
@@ -147,7 +151,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2i9-aw-GJI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-271" y="133"/>
+            <point key="canvasLocation" x="25" y="133"/>
         </scene>
         <!--Ib Calendar Data Source-->
         <scene sceneID="tne-QT-ifu">
@@ -165,7 +169,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Dy1-ru-VJX" kind="presentation" id="9mk-gI-cu9"/>
+                                    <segue destination="Dy1-ru-VJX" kind="presentation" identifier="AddWorkout" id="9mk-gI-cu9"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="cJI-TV-8JR">
@@ -308,11 +312,54 @@
                         <outlet property="calendarHeader" destination="zJ7-fm-NIW" id="V3F-aA-WEd"/>
                         <outlet property="calendarView" destination="3du-Xn-rmZ" id="x6D-WN-z9x"/>
                         <outlet property="headerLabel" destination="iou-iu-BP0" id="L9M-aY-w84"/>
+                        <segue destination="w6b-f8-0sB" kind="show" identifier="ListWorkouts" id="72p-VZ-Wi9"/>
+                        <segue destination="zst-4g-aUo" kind="show" identifier="ViewWorkout" id="pv5-Ow-E65"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="741.60000000000002" y="132.68365817091455"/>
+        </scene>
+        <!--Workout Table View Controller-->
+        <scene sceneID="lzi-WS-Osf">
+            <objects>
+                <tableViewController id="w6b-f8-0sB" customClass="WorkoutTableViewController" customModule="iWorkout" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="dT2-1W-QWg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WorkoutTableCell" id="BnU-qI-1aT" customClass="WorkoutTableViewCell" customModule="iWorkout" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BnU-qI-1aT" id="jQg-8i-J54">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yRl-zb-HNc">
+                                            <rect key="frame" x="16" y="11" width="343" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="startLabel" destination="yRl-zb-HNc" id="KKN-qo-VIR"/>
+                                    <segue destination="zst-4g-aUo" kind="show" id="Rzu-he-MzQ"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="w6b-f8-0sB" id="B4T-Yx-kMW"/>
+                            <outlet property="delegate" destination="w6b-f8-0sB" id="Zex-Uq-iz7"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9e9-8y-myy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1464.8" y="132.68365817091455"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="jzJ-gk-sFU">
@@ -330,7 +377,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WeW-4c-12M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1575" y="226"/>
+            <point key="canvasLocation" x="742" y="904"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Rzu-he-MzQ"/>
+    </inferredMetricsTieBreakers>
 </document>

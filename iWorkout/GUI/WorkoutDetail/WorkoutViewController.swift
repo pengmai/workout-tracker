@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import os
 
 class WorkoutViewController: UIViewController {
     // MARK: - Constants
@@ -20,20 +21,43 @@ class WorkoutViewController: UIViewController {
 
     @IBOutlet weak var startTimePicker: UIDatePicker!
     @IBOutlet weak var endTimePicker: UIDatePicker!
+    @IBOutlet weak var navigationBar: UINavigationItem!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     weak var addWorkoutDelegate: AddWorkoutDelegate?
+    weak var updateWorkoutDelegate: UpdateWorkoutDelegate?
 
     var running = false
     var timer = Timer()
     var user: Int!
+    var workout: Workout?
     var numberOfSeconds: Int = 0
+    var shouldUnwindToTable: Bool!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        showStopwatch()
+        if let workout = workout {
+            // Updating an existing workout.
+            showDatepickers()
+            navigationBar.title = "Edit Workout"
+            segmentedControl.isHidden = true
+            segmentedControl.selectedSegmentIndex = 1
+            startTimePicker.setDate(workout.start, animated: false)
+            endTimePicker.setDate(workout.end, animated: false)
+            saveButton.isEnabled = false
 
-        endTimePicker.setDate(endTimePicker.date + minute, animated: false)
+            guard let user = user else {
+                self.displayAlert(title: "Something went wrong.", message: "There was a problem with the workout you selected.")
+                os_log("Tried to edit workout where user was nil", log: OSLog.default, type: .error)
+                return
+            }
+            workout.user = user
+        } else {
+            // Adding a new workout.
+            showStopwatch()
+            segmentedControl.isHidden = false
+            endTimePicker.setDate(endTimePicker.date + minute, animated: false)
+        }
 
         // Styles
         startButton.layer.cornerRadius = 0.5 * startButton.bounds.width
@@ -55,7 +79,7 @@ class WorkoutViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: { _ in self.dismiss(animated: true, completion: nil) }))
             present(alert, animated: true)
         } else {
-            dismiss(animated: true, completion: nil)
+            unwindToPreviousScreen()
         }
     }
 
@@ -63,16 +87,33 @@ class WorkoutViewController: UIViewController {
         if numberOfSeconds == 0 && segmentedControl.selectedSegmentIndex == 0 {
             self.displayAlert(title: "Please enter a workout.", message: "You can enter a workout via the timer or the supplied date pickers.")
             return
-        } else if (running) {
+        } else if running {
             stopTimer()
         }
 
         let confirmationAlert = UIAlertController(title: "Save this workout?", message: "", preferredStyle: .alert)
-        confirmationAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: {action in
-            self.saveWorkout(completion: {
-                self.addWorkoutDelegate?.add(workout: $0)
-                self.dismiss(animated: true, completion: nil)
-            })
+        confirmationAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            if let workout = self.workout {
+                // Update the workout.
+                let copy = workout.copy()
+                copy.start = self.startTimePicker.date
+                copy.end = self.endTimePicker.date
+                self.updateWorkout(workout: copy, completion: {
+                    self.updateWorkoutDelegate?.update(workout: copy)
+
+                    // If we were supposed to go back to the table view controller but the date changed, return to the calendar
+                    if self.shouldUnwindToTable && !copy.end.isSameDayAs(workout.end) {
+                        self.shouldUnwindToTable = false
+                    }
+                    self.unwindToPreviousScreen()
+                })
+            } else {
+                // Add the workout.
+                self.saveWorkout(completion: {
+                    self.addWorkoutDelegate?.add(workout: $0)
+                    self.dismiss(animated: true, completion: nil)
+                })
+            }
         }))
         confirmationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(confirmationAlert, animated: true)
@@ -91,7 +132,6 @@ class WorkoutViewController: UIViewController {
     }
 
     @IBAction func startOrStopPressed(_ sender: UIButton) {
-        print("Start/Stop button pressed")
         if running {
             stopTimer()
             enableResetButton()
@@ -110,12 +150,14 @@ class WorkoutViewController: UIViewController {
         if UInt64(startTimePicker.date.timeIntervalSince1970 / minute) >= UInt64(endTimePicker.date.timeIntervalSince1970 / minute) {
             endTimePicker.setDate(sender.date + minute, animated: true)
         }
+        updateSaveButtonState()
     }
 
     @IBAction func endDateChanged(_ sender: UIDatePicker) {
         if UInt64(startTimePicker.date.timeIntervalSince1970 / minute) >= UInt64(endTimePicker.date.timeIntervalSince1970 / minute) {
             startTimePicker.setDate(sender.date - minute, animated: true)
         }
+        updateSaveButtonState()
     }
 
     // MARK: Private methods
@@ -133,6 +175,16 @@ class WorkoutViewController: UIViewController {
         resetButton.isHidden = true
         startTimePicker.isHidden = false
         endTimePicker.isHidden = false
+    }
+
+    private func unwindToPreviousScreen() {
+        if shouldUnwindToTable {
+            performSegue(withIdentifier: "returnToWorkoutTable", sender: self)
+        } else if workout != nil {
+            performSegue(withIdentifier: "returnToViewController", sender: nil)
+        } else {
+            dismiss(animated: true, completion: nil)
+        }
     }
 
     private func startTimer() {
@@ -165,6 +217,16 @@ class WorkoutViewController: UIViewController {
         resetButton.layer.borderColor = #colorLiteral(red: 0.6666666865, green: 0.6666666865, blue: 0.6666666865, alpha: 1)
     }
 
+    private func updateSaveButtonState() {
+        if let workout = workout {
+            if workout.start != startTimePicker.date || workout.end != endTimePicker.date {
+                saveButton.isEnabled = true
+            } else {
+                saveButton.isEnabled = false
+            }
+        }
+    }
+
     private func saveWorkout(completion: @escaping (_ workout: Workout) -> Void) {
         let activityIndicator = showActivityIndicator()
 
@@ -187,12 +249,27 @@ class WorkoutViewController: UIViewController {
             activityIndicator.removeFromSuperview()
             switch result {
             case .success(let resp):
-                print("Saved workout with id \(resp.id)")
+                os_log("Saved workout with id %d", log: OSLog.default, type: .default, resp.id)
                 workout.id = resp.id
                 completion(workout)
             case .failure(let error):
+                os_log("Could not save workout: %s", log: OSLog.default, type: .error, error.localizedDescription)
                 self.displayAlert(title: "Something went wrong.", message: "Sorry, we couldn't save your workout. Please try again.")
-                print("Could not save workout: \(error.localizedDescription)")
+            }
+        })
+    }
+
+    private func updateWorkout(workout: Workout, completion: @escaping () -> Void) {
+        let activityIndicator = showActivityIndicator()
+        Network.update(workout: workout, completion: { result in
+            activityIndicator.removeFromSuperview()
+            switch result {
+            case .success(_):
+                os_log("Updated workout with id %d", log: OSLog.default, type: .default, workout.id)
+                completion()
+            case .failure(let error):
+                os_log("Could not save workout: %s", log: OSLog.default, type: .error, error.localizedDescription)
+                self.displayAlert(title: "Something went wrong.", message: "Sorry, we couldn't save your workout. Please try again.")
             }
         })
     }
