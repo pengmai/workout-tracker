@@ -150,7 +150,10 @@ func (db *DB) GetWorkouts(userID int) ([]Workout, error) {
 			workouts = append(workouts, workout)
 			return readErr
 		},
-		"SELECT id, start_time, end_time FROM workouts WHERE user_id = $1",
+		`SELECT id, start_time, end_time
+		FROM workouts
+		WHERE user_id = $1
+		ORDER BY end_time`,
 		userID,
 	)
 	return workouts, err

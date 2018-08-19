@@ -220,12 +220,12 @@ func (env *Env) UpdateWorkout(w http.ResponseWriter, r *http.Request, ps httprou
 // validation to ensure that the caller has access to do so.
 func (env *Env) DeleteWorkout(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	workoutString := ps.ByName("id")
-	workoutID, err := strconv.ParseInt(workoutString, 10, 32)
+	workoutID, err := strconv.Atoi(workoutString)
 	if err != nil {
 		WriteError(w, http.StatusBadRequest, err, "Invalid workout")
 		return
 	}
-	err = env.db.DeleteWorkout(int(workoutID))
+	err = env.db.DeleteWorkout(workoutID)
 	if err != nil {
 		InternalServerError(w, err)
 		return
