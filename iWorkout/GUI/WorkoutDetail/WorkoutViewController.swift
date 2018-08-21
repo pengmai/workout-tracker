@@ -25,6 +25,7 @@ class WorkoutViewController: UIViewController {
     @IBOutlet weak var saveButton: UIBarButtonItem!
     weak var addWorkoutDelegate: AddWorkoutDelegate?
     weak var updateWorkoutDelegate: UpdateWorkoutDelegate?
+    weak var deleteWorkoutDelegate: DeleteWorkoutDelegate?
 
     var running = false
     var timer = Timer()
@@ -52,6 +53,17 @@ class WorkoutViewController: UIViewController {
                 return
             }
             workout.user = user
+
+            let deleteWorkoutButton = UIButton(type: .system)
+            let parentHeight = view.frame.size.height
+            let parentWidth = view.frame.size.width
+            deleteWorkoutButton.frame = CGRect(x: 20, y: parentHeight - 78, width: parentWidth - 40, height: 38)
+            deleteWorkoutButton.backgroundColor = .red
+            deleteWorkoutButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
+            deleteWorkoutButton.setTitle("Delete Workout", for: .normal)
+            deleteWorkoutButton.titleLabel?.font = .systemFont(ofSize: 21)
+            deleteWorkoutButton.setTitleColor(.white, for: .normal)
+            self.view.addSubview(deleteWorkoutButton)
         } else {
             // Adding a new workout.
             showStopwatch()
@@ -158,6 +170,24 @@ class WorkoutViewController: UIViewController {
             startTimePicker.setDate(sender.date - minute, animated: true)
         }
         updateSaveButtonState()
+    }
+
+    @objc func deleteButtonPressed(sender: UIButton!) {
+        let confirmationAlert = UIAlertController(title: "Delete this workout?", message: nil, preferredStyle: .alert)
+        confirmationAlert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
+            guard let workout = self.workout else {
+                fatalError("Tried to delete workout but none was found")
+            }
+            self.deleteWorkout(workout: workout, completion: {
+                self.deleteWorkoutDelegate?.delete(workout: workout)
+                if self.shouldUnwindToTable, self.deleteWorkoutDelegate?.getNumberOfRemainingWorkouts() == 1 {
+                    self.shouldUnwindToTable = false
+                }
+                self.unwindToPreviousScreen()
+            })
+        }))
+        confirmationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(confirmationAlert, animated: true)
     }
 
     // MARK: Private methods
@@ -269,6 +299,21 @@ class WorkoutViewController: UIViewController {
                 completion()
             case .failure(let error):
                 os_log("Could not save workout: %s", log: OSLog.default, type: .error, error.localizedDescription)
+                self.displayAlert(title: "Something went wrong.", message: "Sorry, we couldn't save your workout. Please try again.")
+            }
+        })
+    }
+
+    private func deleteWorkout(workout: Workout, completion: @escaping () -> Void) {
+        let activityIndicator = showActivityIndicator()
+        Network.delete(workout: workout, completion: { result in
+            activityIndicator.removeFromSuperview()
+            switch result {
+            case .success(_):
+                os_log("Deleted workout with id %d", log: OSLog.default, type: .default, workout.id)
+                completion()
+            case .failure(let error):
+                os_log("Could not delete workout with id %d", log: OSLog.default, type: .error, error.localizedDescription)
                 self.displayAlert(title: "Something went wrong.", message: "Sorry, we couldn't save your workout. Please try again.")
             }
         })

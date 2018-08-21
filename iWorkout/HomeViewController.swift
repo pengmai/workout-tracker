@@ -10,12 +10,13 @@ import UIKit
 import JTAppleCalendar
 import os
 
-class ViewController: UIViewController {
+class HomeViewController: UIViewController {
     // MARK: - Properties
     @IBOutlet weak var calendarHeader: UILabel!
     @IBOutlet weak var calendarView: JTAppleCalendarView!
     @IBOutlet weak var headerLabel: UINavigationItem!
 
+    var resp: LoginResponse!
     var workouts = [Date: [Workout]]()
     var user: User!
 
@@ -25,22 +26,10 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let activityIndicator = showActivityIndicator()
-        let token = "5FN/5uQhaN20J8TfiBDgsLm0+W58mpIoxE9G05AyQrs="
-        Network.loadInitialState(token: token, completion: {
-            activityIndicator.removeFromSuperview()
-            switch $0 {
-            case .success(let resp):
-                self.workouts = Dictionary(grouping: resp.workouts, by: { $0.end.getDay() })
-                self.user = resp.user
-                self.headerLabel.title = "\(resp.user.name)'s Workouts"
-                self.calendarView.reloadData()
-            case .failure(let err):
-                os_log("Unable to load workouts: %s", log: OSLog.default, type: .error, err.localizedDescription)
-                self.displayAlert(title: "Something went wrong.", message: "We weren't able to load your workouts.")
-            }
-        })
+        self.workouts = Dictionary(grouping: resp.workouts, by: { $0.end.getDay() })
+        self.user = resp.user
+        self.headerLabel.title = "\(resp.user.name)'s Workouts"
+        self.calendarView.reloadData()
 
         // Do any additional setup after loading the view, typically from a nib.
         setupCalendarView()
@@ -60,6 +49,18 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+
+    // MARK: - Actions
+    @IBAction func logOutButtonPressed(_ sender: UIBarButtonItem) {
+        let confirmationAlert = UIAlertController(title: "Are you sure you want to log out?", message: nil, preferredStyle: .alert)
+        confirmationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        confirmationAlert.addAction(UIAlertAction(title: "Log out", style: .destructive, handler: { (_) in
+            self.performSegue(withIdentifier: "returnToLoginPage", sender: sender)
+        }))
+
+        present(confirmationAlert, animated: true, completion: nil)
+    }
+
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -84,6 +85,7 @@ class ViewController: UIViewController {
                 destination.workouts = workouts
                 destination.user = user.id
                 destination.updateWorkoutDelegate = self
+                destination.deleteWorkoutDelegate = self
             case "ViewWorkout":
                 guard let destination = segue.destination as? WorkoutViewController else {
                     fatalError("Destination was not a WorkoutViewController for segue ListWorkouts")
@@ -93,9 +95,12 @@ class ViewController: UIViewController {
                 }
 
                 destination.updateWorkoutDelegate = self
+                destination.deleteWorkoutDelegate = self
                 destination.shouldUnwindToTable = false
                 destination.workout = workout
                 destination.user = user.id
+            case "returnToLoginPage":
+                break
             default:
                 fatalError("Unexpected segue identifier: \(segue.identifier ?? "nil")")
         }
@@ -110,7 +115,7 @@ protocol AddWorkoutDelegate: class {
     func add(workout: Workout)
 }
 
-extension ViewController: AddWorkoutDelegate {
+extension HomeViewController: AddWorkoutDelegate {
     func add(workout: Workout) {
         let day = workout.end.getDay()
         if var workoutsForDay = workouts[day] {
@@ -130,7 +135,7 @@ protocol UpdateWorkoutDelegate: class {
     func update(workout: Workout)
 }
 
-extension ViewController: UpdateWorkoutDelegate {
+extension HomeViewController: UpdateWorkoutDelegate {
     func update(workout: Workout) {
         // Flatten the dictionary of workouts.
         var workoutList = workouts.reduce([]) { $0 + $1.value }
@@ -149,15 +154,28 @@ extension ViewController: UpdateWorkoutDelegate {
 // MARK: - Delete Workout Delegate
 protocol DeleteWorkoutDelegate: class {
     func delete(workout: Workout)
+    func getNumberOfRemainingWorkouts() -> Int
 }
 
-extension ViewController: DeleteWorkoutDelegate {
+extension HomeViewController: DeleteWorkoutDelegate {
     func delete(workout: Workout) {
+        var workoutList = workouts.reduce([], { $0 + $1.value })
+        guard let i = workoutList.index(where: { $0.id == workout.id }) else {
+            fatalError("Tried to remove a workout that wasn't in the list of workouts")
+        }
+
+        workoutList.remove(at: i)
+        workouts = Dictionary(grouping: workoutList, by: { $0.end.getDay() })
+        calendarView.reloadDates([workout.end])
+    }
+
+    func getNumberOfRemainingWorkouts() -> Int {
+        fatalError("Not implemented in the main view controller")
     }
 }
 
 // MARK: - Calendar settings
-extension ViewController: JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSource {
+extension HomeViewController: JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSource {
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
         formatter.dateFormat = "yyyy MM dd"
         formatter.timeZone = Calendar.current.timeZone

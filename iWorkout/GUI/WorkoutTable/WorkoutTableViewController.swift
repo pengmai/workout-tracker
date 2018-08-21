@@ -14,6 +14,7 @@ class WorkoutTableViewController: UITableViewController {
     var workouts: [Workout]!
     var user: Int!
     var updateWorkoutDelegate: UpdateWorkoutDelegate!
+    var deleteWorkoutDelegate: DeleteWorkoutDelegate!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,6 +92,7 @@ class WorkoutTableViewController: UITableViewController {
             destination.user = user
             destination.shouldUnwindToTable = true
             destination.updateWorkoutDelegate = self
+            destination.deleteWorkoutDelegate = self
         }
         // Pass the selected object to the new view controller.
     }
@@ -110,5 +112,21 @@ extension WorkoutTableViewController: UpdateWorkoutDelegate {
 
         workouts[i] = workout
         tableView.reloadRows(at: [IndexPath(row: i, section: 0)], with: .automatic)
+    }
+}
+
+extension WorkoutTableViewController: DeleteWorkoutDelegate {
+    func delete(workout: Workout) {
+        deleteWorkoutDelegate.delete(workout: workout)
+        guard let i = workouts.index(where: { $0.id == workout.id }) else {
+            fatalError("Tried to delete workout that wasn't in the list")
+        }
+
+        workouts.remove(at: i)
+        tableView.reloadData()
+    }
+
+    func getNumberOfRemainingWorkouts() -> Int {
+        return workouts.count
     }
 }

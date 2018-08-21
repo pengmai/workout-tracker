@@ -6,4 +6,5 @@ use_frameworks!
 target 'iWorkout' do
     pod 'JTAppleCalendar', '~> 7.0'
     pod 'Charts'
+    pod 'SwiftKeychainWrapper'
 end

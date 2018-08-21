@@ -13,6 +13,11 @@ enum Result <Value> {
     case failure(Error)
 }
 
+struct UserLoginRequest: Codable {
+    var name: String
+    var password: String
+}
+
 struct LoginRequest: Codable {
     var token: String
 }
@@ -26,6 +31,7 @@ struct NoContent: Decodable {}
 struct User: Codable {
     var id: Int
     var name: String
+    var token: String
 }
 
 struct LoginResponse: Codable {
@@ -33,23 +39,52 @@ struct LoginResponse: Codable {
     var workouts: [Workout]
 }
 
+struct SignUpResponse: Codable {
+    var id: Int
+    var token: String
+}
+
+struct HTTPError: Codable, Error {
+    var error: String
+}
+
+enum HTTPVerb: String {
+    case post = "POST"
+    case put = "PUT"
+    case delete = "DELETE"
+}
+
 class Network {
-    static let baseUrl = "17b466a3.ngrok.io"
+    static let baseUrl = "57730584.ngrok.io"
+
+    static func signUp(name: String, password: String, completion: @escaping (Result<SignUpResponse>) -> Void) {
+        let request = UserLoginRequest(name: name, password: password)
+        sendHTTPRequest(verb: .post, path: "/signup", body: request, completion: completion)
+    }
+
+    static func logIn(name: String, password: String, completion: @escaping (Result<LoginResponse>) -> Void) {
+        let request = UserLoginRequest(name: name, password: password)
+        sendHTTPRequest(verb: .post, path: "/login", body: request, completion: completion)
+    }
 
     static func loadInitialState(token: String, completion: @escaping (Result<LoginResponse>) -> Void) {
         let request = LoginRequest(token: token)
-        sendHTTPRequest(verb: "POST", path: "/login", body: request, completion: completion)
+        sendHTTPRequest(verb: .post, path: "/login", body: request, completion: completion)
     }
 
     static func save(workout: Workout, completion: @escaping (Result<WorkoutResponse>) -> Void) {
-        sendHTTPRequest(verb: "POST", path: "/workout", body: workout, completion: completion)
+        sendHTTPRequest(verb: .post, path: "/workout", body: workout, completion: completion)
     }
 
     static func update(workout: Workout, completion: @escaping (Result<NoContent>) -> Void) {
-        sendHTTPRequest(verb: "PUT", path: "/workout", body: workout, completion: completion, defaultValue: NoContent())
+        sendHTTPRequest(verb: .put, path: "/workout", body: workout, completion: completion, defaultValue: NoContent())
     }
 
-    static func sendHTTPRequest<T: Codable, R: Decodable>(verb: String, path: String, body: T, completion: @escaping (Result<R>) -> Void, defaultValue: R? = nil) {
+    static func delete(workout: Workout, completion: @escaping (Result<NoContent>) -> Void) {
+        sendHTTPRequest(verb: .delete, path: "/workout/\(workout.id)", body: workout, completion: completion, defaultValue: NoContent())
+    }
+
+    static func sendHTTPRequest<T: Codable, R: Decodable>(verb: HTTPVerb, path: String, body: T, completion: @escaping (Result<R>) -> Void, defaultValue: R? = nil) {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = baseUrl
@@ -61,7 +96,7 @@ class Network {
         }
 
         var request = URLRequest(url: url)
-        request.httpMethod = verb
+        request.httpMethod = verb.rawValue
         var headers = request.allHTTPHeaderFields ?? [:]
         headers["Content-Type"] = "application/json"
         request.allHTTPHeaderFields = headers
@@ -89,6 +124,17 @@ class Network {
                     if let jsonData = responseData {
                         let decoder = JSONDecoder()
                         decoder.dateDecodingStrategy = .iso8601
+
+                        if httpResponse.statusCode >= 400 {
+                            do {
+                                let resp = try decoder.decode(HTTPError.self, from: jsonData)
+                                completion(.failure(resp))
+                                return
+                            } catch {
+                                completion(.failure(error))
+                                return
+                            }
+                        }
 
                         do {
                             let resp = try decoder.decode(R.self, from: jsonData)

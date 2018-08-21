@@ -8,8 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		278BB3ECC3972B6AD23D2DC9 /* Pods_iWorkout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29CD1417009AF977A1B13077 /* Pods_iWorkout.framework */; };
+		AC04B022212B9641008E4A32 /* Datastore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC04B021212B9641008E4A32 /* Datastore.swift */; };
+		AC04B024212B9772008E4A32 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC04B023212B9772008E4A32 /* SignupViewController.swift */; };
+		AC04B026212B9E03008E4A32 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC04B025212B9E03008E4A32 /* LoginPageViewController.swift */; };
 		AC1C9562208817F300C8822E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1C9561208817F300C8822E /* AppDelegate.swift */; };
-		AC1C9564208817F300C8822E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1C9563208817F300C8822E /* ViewController.swift */; };
+		AC1C9564208817F300C8822E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1C9563208817F300C8822E /* HomeViewController.swift */; };
 		AC1C9567208817F300C8822E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC1C9565208817F300C8822E /* Main.storyboard */; };
 		AC1C9569208817F600C8822E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC1C9568208817F600C8822E /* Assets.xcassets */; };
 		AC1C956C208817F600C8822E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC1C956A208817F600C8822E /* LaunchScreen.storyboard */; };
@@ -25,6 +28,7 @@
 		AC4174AF20CDD591001545B1 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4174AE20CDD591001545B1 /* Workout.swift */; };
 		AC4174B220CDEF58001545B1 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4174B120CDEF58001545B1 /* UIViewController.swift */; };
 		AC4761262128673600A97BEA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4761252128673600A97BEA /* Extensions.swift */; };
+		AC8759F6212B5B63005FB9F8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8759F5212B5B63005FB9F8 /* LoginViewController.swift */; };
 		AC8D521C211B8EA5005E63D0 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8D521B211B8EA5005E63D0 /* Date.swift */; };
 		ACAE3A55210511C80074F905 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAE3A54210511C80074F905 /* CalendarCell.swift */; };
 /* End PBXBuildFile section */
@@ -61,9 +65,12 @@
 
 /* Begin PBXFileReference section */
 		29CD1417009AF977A1B13077 /* Pods_iWorkout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iWorkout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC04B021212B9641008E4A32 /* Datastore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Datastore.swift; sourceTree = "<group>"; };
+		AC04B023212B9772008E4A32 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		AC04B025212B9E03008E4A32 /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
 		AC1C955E208817F300C8822E /* iWorkout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iWorkout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC1C9561208817F300C8822E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AC1C9563208817F300C8822E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		AC1C9563208817F300C8822E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		AC1C9566208817F300C8822E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AC1C9568208817F600C8822E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AC1C956B208817F600C8822E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -84,6 +91,7 @@
 		AC4174AE20CDD591001545B1 /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		AC4174B120CDEF58001545B1 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		AC4761252128673600A97BEA /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		AC8759F5212B5B63005FB9F8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		AC8D521B211B8EA5005E63D0 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		ACAE3A54210511C80074F905 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		DABC87DB63C21002943473B4 /* Pods-iWorkout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iWorkout.release.xcconfig"; path = "Pods/Target Support Files/Pods-iWorkout/Pods-iWorkout.release.xcconfig"; sourceTree = "<group>"; };
@@ -124,6 +132,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		AC04B020212B95F0008E4A32 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				AC8759F5212B5B63005FB9F8 /* LoginViewController.swift */,
+				AC04B023212B9772008E4A32 /* SignupViewController.swift */,
+				AC04B025212B9E03008E4A32 /* LoginPageViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		AC1C9555208817F300C8822E = {
 			isa = PBXGroup;
 			children = (
@@ -153,7 +171,7 @@
 				AC4174B020CDEF30001545B1 /* Extensions */,
 				AC4174A920CDC8A0001545B1 /* Model */,
 				AC1C9561208817F300C8822E /* AppDelegate.swift */,
-				AC1C9563208817F300C8822E /* ViewController.swift */,
+				AC1C9563208817F300C8822E /* HomeViewController.swift */,
 				AC1C9565208817F300C8822E /* Main.storyboard */,
 				AC1C9568208817F600C8822E /* Assets.xcassets */,
 				AC1C956A208817F600C8822E /* LaunchScreen.storyboard */,
@@ -185,6 +203,7 @@
 		AC356CF12120E72300B7F531 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				AC04B020212B95F0008E4A32 /* Login */,
 				AC356CF32120E75600B7F531 /* WorkoutDetail */,
 				AC356CF22120E73300B7F531 /* WorkoutTable */,
 			);
@@ -216,6 +235,7 @@
 				AC4174AA20CDC8B7001545B1 /* Network.swift */,
 				AC4174AC20CDC9BD001545B1 /* Errors.swift */,
 				AC4174AE20CDD591001545B1 /* Workout.swift */,
+				AC04B021212B9641008E4A32 /* Datastore.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -397,11 +417,13 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-iWorkout/Pods-iWorkout-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/JTAppleCalendar/JTAppleCalendar.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JTAppleCalendar.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -415,12 +437,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC8759F6212B5B63005FB9F8 /* LoginViewController.swift in Sources */,
+				AC04B022212B9641008E4A32 /* Datastore.swift in Sources */,
 				AC356CEF2120E6D700B7F531 /* WorkoutTableViewController.swift in Sources */,
+				AC04B026212B9E03008E4A32 /* LoginPageViewController.swift in Sources */,
 				AC4174B220CDEF58001545B1 /* UIViewController.swift in Sources */,
 				AC1C95902088441400C8822E /* WorkoutViewController.swift in Sources */,
 				AC4174AD20CDC9BD001545B1 /* Errors.swift in Sources */,
 				AC356CF82122522900B7F531 /* WorkoutTableViewCell.swift in Sources */,
-				AC1C9564208817F300C8822E /* ViewController.swift in Sources */,
+				AC1C9564208817F300C8822E /* HomeViewController.swift in Sources */,
+				AC04B024212B9772008E4A32 /* SignupViewController.swift in Sources */,
 				AC4174AB20CDC8B7001545B1 /* Network.swift in Sources */,
 				AC1C9562208817F300C8822E /* AppDelegate.swift in Sources */,
 				AC4174AF20CDD591001545B1 /* Workout.swift in Sources */,
