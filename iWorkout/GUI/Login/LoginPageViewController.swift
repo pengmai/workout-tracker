@@ -58,6 +58,7 @@ class LoginPageViewController: UIPageViewController, UIPageViewControllerDelegat
         if let firstViewController = pages.first {
             setViewControllers([firstViewController], direction: .forward, animated: true, completion: nil)
         }
+        navigationController?.isNavigationBarHidden = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -84,6 +85,7 @@ class LoginPageViewController: UIPageViewController, UIPageViewControllerDelegat
         if let first = pages.first {
             setViewControllers([first], direction: .forward, animated: true, completion: nil)
         }
+        navigationController?.isNavigationBarHidden = true
     }
 }
 

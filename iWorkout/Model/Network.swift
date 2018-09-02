@@ -45,6 +45,11 @@ struct SignUpResponse: Codable {
 }
 
 struct HTTPError: Codable, Error {
+    var code: Int
+    var body: String
+}
+
+struct ErrorResponse: Codable {
     var error: String
 }
 
@@ -55,7 +60,7 @@ enum HTTPVerb: String {
 }
 
 class Network {
-    static let baseUrl = "57730584.ngrok.io"
+    static let baseUrl = "localhost"
 
     static func signUp(name: String, password: String, completion: @escaping (Result<SignUpResponse>) -> Void) {
         let request = UserLoginRequest(name: name, password: password)
@@ -86,9 +91,11 @@ class Network {
 
     static func sendHTTPRequest<T: Codable, R: Decodable>(verb: HTTPVerb, path: String, body: T, completion: @escaping (Result<R>) -> Void, defaultValue: R? = nil) {
         var urlComponents = URLComponents()
-        urlComponents.scheme = "https"
+//        urlComponents.scheme = "https"
+        urlComponents.scheme = "http"
         urlComponents.host = baseUrl
         urlComponents.path = path
+        urlComponents.port = 8080
 
         guard let url = urlComponents.url else {
             completion(.failure(WorkoutError.urlError))
@@ -127,8 +134,8 @@ class Network {
 
                         if httpResponse.statusCode >= 400 {
                             do {
-                                let resp = try decoder.decode(HTTPError.self, from: jsonData)
-                                completion(.failure(resp))
+                                let resp = try decoder.decode(ErrorResponse.self, from: jsonData)
+                                completion(.failure(HTTPError(code: httpResponse.statusCode, body: resp.error)))
                                 return
                             } catch {
                                 completion(.failure(error))

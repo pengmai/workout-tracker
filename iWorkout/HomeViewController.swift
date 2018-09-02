@@ -33,6 +33,7 @@ class HomeViewController: UIViewController {
 
         // Do any additional setup after loading the view, typically from a nib.
         setupCalendarView()
+        navigationController?.isNavigationBarHidden = false
     }
 
     private func setupCalendarView() {
@@ -99,6 +100,12 @@ class HomeViewController: UIViewController {
                 destination.shouldUnwindToTable = false
                 destination.workout = workout
                 destination.user = user.id
+            case "ViewCharts":
+                guard let destination = segue.destination as? ChartsViewController else {
+                    fatalError("Destination was not a ChartsViewController for segue ViewCharts")
+                }
+
+                destination.workouts = workouts
             case "returnToLoginPage":
                 break
             default:

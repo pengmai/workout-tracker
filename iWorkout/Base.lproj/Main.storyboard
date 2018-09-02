@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -146,7 +147,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="zUQ-Bk-HW1">
-                                <rect key="frame" x="105" y="257.5" width="165" height="153.5"/>
+                                <rect key="frame" x="105" y="257" width="165" height="153.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create new profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R0n-qH-X2J">
                                         <rect key="frame" x="0.0" y="0.0" width="165" height="25.5"/>
@@ -241,7 +242,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
-                                            <action selector="userNameFieldDidChange:" destination="Zhr-WO-a5z" eventType="editingDidEnd" id="gsZ-9t-2GA"/>
+                                            <action selector="userNameFieldDidChange:" destination="Zhr-WO-a5z" eventType="editingChanged" id="qbv-d2-95s"/>
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vsl-tm-cwj">
@@ -250,7 +251,8 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES"/>
                                         <connections>
-                                            <action selector="passwordFieldDidChange:" destination="Zhr-WO-a5z" eventType="editingDidEnd" id="JGy-Un-44S"/>
+                                            <action selector="goButtonPressed:" destination="Zhr-WO-a5z" eventType="editingDidEndOnExit" id="aQt-zr-xGX"/>
+                                            <action selector="passwordFieldDidChange:" destination="Zhr-WO-a5z" eventType="editingChanged" id="Bsl-IB-HQ7"/>
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iIw-oD-JpG">
@@ -318,6 +320,71 @@
                 <exit id="8of-x0-gdo" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-1190" y="-649"/>
+        </scene>
+        <!--Charts View Controller-->
+        <scene sceneID="uWN-Lc-uOP">
+            <objects>
+                <viewController id="4FB-kj-fxQ" customClass="ChartsViewController" customModule="iWorkout" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="QAg-JS-jPK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mGD-hX-zig">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="yTB-zM-NhE">
+                                        <rect key="frame" x="8" y="8" width="359" height="53.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 days" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Im1-TX-ELQ">
+                                                <rect key="frame" x="0.0" y="0.0" width="81.5" height="33.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Since you last worked out" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tWt-oO-zrX">
+                                                <rect key="frame" x="0.0" y="33.5" width="196" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                                <size key="shadowOffset" width="0.0" height="0.0"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="Im1-TX-ELQ" secondAttribute="bottom" constant="20" symbolic="YES" id="SbD-Nc-PLZ"/>
+                                        </constraints>
+                                    </stackView>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Cj-sb-W1L" customClass="LineChartView" customModule="Charts">
+                                        <rect key="frame" x="8" y="89" width="359" height="197"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="yTB-zM-NhE" secondAttribute="bottom" constant="345" id="KS8-5d-Jn7"/>
+                                    <constraint firstItem="yTB-zM-NhE" firstAttribute="trailing" secondItem="mGD-hX-zig" secondAttribute="trailingMargin" id="TNp-fQ-dK0"/>
+                                    <constraint firstItem="yTB-zM-NhE" firstAttribute="leading" secondItem="mGD-hX-zig" secondAttribute="leadingMargin" id="h7e-p8-HJb"/>
+                                    <constraint firstItem="yTB-zM-NhE" firstAttribute="centerX" secondItem="mGD-hX-zig" secondAttribute="centerX" id="ta9-NZ-JAH"/>
+                                    <constraint firstItem="yTB-zM-NhE" firstAttribute="top" secondItem="mGD-hX-zig" secondAttribute="topMargin" id="zxf-dy-MmR"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="mGD-hX-zig" firstAttribute="leading" secondItem="1gg-bb-Zl2" secondAttribute="leading" id="4IG-ph-Nuq"/>
+                            <constraint firstItem="mGD-hX-zig" firstAttribute="trailing" secondItem="1gg-bb-Zl2" secondAttribute="trailing" id="W59-9M-LEX"/>
+                            <constraint firstItem="mGD-hX-zig" firstAttribute="top" secondItem="1gg-bb-Zl2" secondAttribute="top" id="fq4-Du-knW"/>
+                            <constraint firstItem="mGD-hX-zig" firstAttribute="bottom" secondItem="1gg-bb-Zl2" secondAttribute="bottom" id="pqa-Eh-wjo"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="1gg-bb-Zl2"/>
+                    </view>
+                    <connections>
+                        <outlet property="daysLabel" destination="Im1-TX-ELQ" id="czo-90-Cec"/>
+                        <outlet property="workoutGroupChart" destination="0Cj-sb-W1L" id="zIf-ev-ifY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hQT-qE-bgX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-80.799999999999997" y="146.17691154422789"/>
         </scene>
         <!--Ib Calendar Data Source-->
         <scene sceneID="tne-QT-ifu">
@@ -459,15 +526,29 @@
                                     <constraint firstAttribute="height" constant="404.5" id="zmq-VM-qPc"/>
                                 </constraints>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kaH-oL-TdR">
+                                <rect key="frame" x="20" y="543" width="335" height="38"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <state key="normal" title="View Stats">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="4FB-kj-fxQ" kind="show" identifier="ViewCharts" id="zL5-xM-8P1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="kaH-oL-TdR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="5F8-uC-0ji"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cJI-TV-8JR" secondAttribute="trailing" constant="16" id="D7B-la-7vk"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="xQS-7T-nCp" secondAttribute="bottom" constant="40" id="E2a-TG-bO7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="xQS-7T-nCp" secondAttribute="trailing" constant="20" id="Eun-Xn-Xr3"/>
                             <constraint firstItem="cJI-TV-8JR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="QpU-K7-PoV"/>
                             <constraint firstItem="cJI-TV-8JR" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="fid-CG-DR4"/>
                             <constraint firstItem="xQS-7T-nCp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="gtr-ik-IuA"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="kaH-oL-TdR" secondAttribute="trailing" constant="20" id="gvr-2l-4Gs"/>
+                            <constraint firstItem="xQS-7T-nCp" firstAttribute="top" secondItem="kaH-oL-TdR" secondAttribute="bottom" constant="8" id="hV1-HR-86k"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

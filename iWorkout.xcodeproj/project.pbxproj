@@ -30,7 +30,9 @@
 		AC4761262128673600A97BEA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4761252128673600A97BEA /* Extensions.swift */; };
 		AC8759F6212B5B63005FB9F8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8759F5212B5B63005FB9F8 /* LoginViewController.swift */; };
 		AC8D521C211B8EA5005E63D0 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8D521B211B8EA5005E63D0 /* Date.swift */; };
+		ACAD0960213366F70002015A /* BalloonMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAD095F213366F70002015A /* BalloonMarker.swift */; };
 		ACAE3A55210511C80074F905 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACAE3A54210511C80074F905 /* CalendarCell.swift */; };
+		ACDF2EB4212D1ACC00EFC936 /* ChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDF2EB3212D1ACC00EFC936 /* ChartsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,7 +95,9 @@
 		AC4761252128673600A97BEA /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		AC8759F5212B5B63005FB9F8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		AC8D521B211B8EA5005E63D0 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		ACAD095F213366F70002015A /* BalloonMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalloonMarker.swift; sourceTree = "<group>"; };
 		ACAE3A54210511C80074F905 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
+		ACDF2EB3212D1ACC00EFC936 /* ChartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsViewController.swift; sourceTree = "<group>"; };
 		DABC87DB63C21002943473B4 /* Pods-iWorkout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iWorkout.release.xcconfig"; path = "Pods/Target Support Files/Pods-iWorkout/Pods-iWorkout.release.xcconfig"; sourceTree = "<group>"; };
 		F95F2BBA968AF3B2728B56EC /* Pods-iWorkout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iWorkout.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iWorkout/Pods-iWorkout.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -203,6 +207,7 @@
 		AC356CF12120E72300B7F531 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				ACDF2EB2212D1AA100EFC936 /* Charts */,
 				AC04B020212B95F0008E4A32 /* Login */,
 				AC356CF32120E75600B7F531 /* WorkoutDetail */,
 				AC356CF22120E73300B7F531 /* WorkoutTable */,
@@ -247,6 +252,15 @@
 				AC8D521B211B8EA5005E63D0 /* Date.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		ACDF2EB2212D1AA100EFC936 /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+				ACDF2EB3212D1ACC00EFC936 /* ChartsViewController.swift */,
+				ACAD095F213366F70002015A /* BalloonMarker.swift */,
+			);
+			path = Charts;
 			sourceTree = "<group>";
 		};
 		F84553C39440176402EFB722 /* Pods */ = {
@@ -440,12 +454,14 @@
 				AC8759F6212B5B63005FB9F8 /* LoginViewController.swift in Sources */,
 				AC04B022212B9641008E4A32 /* Datastore.swift in Sources */,
 				AC356CEF2120E6D700B7F531 /* WorkoutTableViewController.swift in Sources */,
+				ACAD0960213366F70002015A /* BalloonMarker.swift in Sources */,
 				AC04B026212B9E03008E4A32 /* LoginPageViewController.swift in Sources */,
 				AC4174B220CDEF58001545B1 /* UIViewController.swift in Sources */,
 				AC1C95902088441400C8822E /* WorkoutViewController.swift in Sources */,
 				AC4174AD20CDC9BD001545B1 /* Errors.swift in Sources */,
 				AC356CF82122522900B7F531 /* WorkoutTableViewCell.swift in Sources */,
 				AC1C9564208817F300C8822E /* HomeViewController.swift in Sources */,
+				ACDF2EB4212D1ACC00EFC936 /* ChartsViewController.swift in Sources */,
 				AC04B024212B9772008E4A32 /* SignupViewController.swift in Sources */,
 				AC4174AB20CDC8B7001545B1 /* Network.swift in Sources */,
 				AC1C9562208817F300C8822E /* AppDelegate.swift in Sources */,

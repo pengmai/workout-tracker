@@ -13,6 +13,10 @@ extension Date {
         return Calendar.current.compare(self, to: other, toGranularity: .day) == .orderedSame
     }
 
+    func isSameMonthAs(_ other: Date) -> Bool {
+        return Calendar.current.compare(self, to: other, toGranularity: .month) == .orderedSame
+    }
+
     func firstDayOfMonth() -> Date {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month], from: self)

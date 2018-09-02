@@ -47,7 +47,15 @@ class LoginViewController: UIViewController {
     }
 
     // MARK: - Actions
+    @IBAction func goButtonPressed(_ sender: UITextField) {
+        login()
+    }
+
     @IBAction func loginButtonPressed(_ sender: UIButton) {
+        login()
+    }
+
+    func login() {
         guard let userText = usernameField.text,
             let passText = passwordField.text else {
             return
@@ -62,7 +70,20 @@ class LoginViewController: UIViewController {
                 self.clearTextFields()
                 self.loginDelegate?.login(with: response)
             case .failure(let err):
-                os_log("Failed to retrieve workouts: %s", log: OSLog.default, type: .error, err.localizedDescription)
+                if let err = err as? HTTPError {
+                    os_log("Failed to retrieve workouts: %{public}@", log: OSLog.default, type: .error, err.body)
+                    switch err.code {
+                    case 401:
+                        fallthrough
+                    case 404:
+                        self.displayAlert(title: "Login failed.", message: "The credentials you entered didn't match our records.")
+                        return
+                    default:
+                        break
+                    }
+                } else {
+                    os_log("Failed to retrieve workouts: %{public}@", log: OSLog.default, type: .error, err.localizedDescription)
+                }
                 self.displayAlert(title: "Something went wrong.", message: "We weren't able to log you in.")
             }
         })

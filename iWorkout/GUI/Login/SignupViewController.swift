@@ -57,12 +57,18 @@ class SignupViewController: UIViewController {
                 self.loginDelegate?.login(with: LoginResponse(user: user, workouts: []))
             case .failure(let err):
                 if let err = err as? HTTPError {
-                    os_log("Failed to sign up new user: %{public}@", log: OSLog.default, type: .error, err.error)
-                    self.displayAlert(title: "The name you selected is taken.", message: "Please try again with a different name.")
+                    os_log("Failed to sign up new user: %{public}@", log: OSLog.default, type: .error, err.body)
+                    switch err.code {
+                    case 400:
+                        self.displayAlert(title: "The name you selected is taken.", message: "Please try again with a different name.")
+                        return
+                    default:
+                        break
+                    }
                 } else {
                     os_log("Failed to sign up new user: %{public}@", log: OSLog.default, type: .error, err.localizedDescription)
-                    self.displayAlert(title: "Something went wrong.", message: "We were unable to create a profile for you. Please try again.")
                 }
+                self.displayAlert(title: "Something went wrong.", message: "We were unable to create a profile for you. Please try again.")
             }
         })
     }
