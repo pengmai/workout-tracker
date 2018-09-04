@@ -107,6 +107,8 @@ func (env *Env) Login(w http.ResponseWriter, r *http.Request, ps httprouter.Para
 		InternalServerError(w, err)
 		return
 	}
+
+	user.Token = request.Token
 	WriteJSON(w, http.StatusOK, LoginResponse{user, workouts})
 }
 

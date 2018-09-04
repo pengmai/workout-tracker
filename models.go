@@ -14,8 +14,9 @@ type UserRequest struct {
 
 // User represents a single user.
 type User struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
+	ID    int    `json:"id"`
+	Name  string `json:"name"`
+	Token string `json:"token,omitempty"`
 }
 
 // Workout represents a single workout.
