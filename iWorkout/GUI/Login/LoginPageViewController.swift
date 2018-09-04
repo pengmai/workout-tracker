@@ -82,19 +82,31 @@ class LoginPageViewController: UIPageViewController, UIPageViewControllerDelegat
 
     @IBAction func returnToLoginPage(segue: UIStoryboardSegue) {
         Datastore.clearToken()
-        if let first = pages.first {
-            setViewControllers([first], direction: .forward, animated: true, completion: nil)
-        }
+        goToLoginPage()
         navigationController?.isNavigationBarHidden = true
     }
 }
 
 protocol LoginDelegate: class {
     func login(with response: LoginResponse)
+    func goToLoginPage()
+    func goToSignupPage()
 }
 
 extension LoginPageViewController: LoginDelegate {
     func login(with response: LoginResponse) {
         performSegue(withIdentifier: "ToHome", sender: response)
+    }
+
+    func goToLoginPage() {
+        if let first = pages.first {
+            setViewControllers([first], direction: .forward, animated: true, completion: nil)
+        }
+    }
+
+    func goToSignupPage() {
+        if let last = pages.last {
+            setViewControllers([last], direction: .forward, animated: true, completion: nil)
+        }
     }
 }

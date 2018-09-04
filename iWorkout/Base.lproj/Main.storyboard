@@ -200,9 +200,18 @@
                                     <constraint firstAttribute="trailing" secondItem="Xk6-Am-NYM" secondAttribute="trailing" id="vQB-AR-wRU"/>
                                 </constraints>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ej7-Ju-izU">
+                                <rect key="frame" x="99" y="617" width="177" height="30"/>
+                                <state key="normal" title="Have an account? Sign in."/>
+                                <connections>
+                                    <action selector="goToLoginButtonPressed:" destination="lY8-Ry-N3a" eventType="touchUpInside" id="av9-h1-XJm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="ej7-Ju-izU" firstAttribute="centerX" secondItem="uNY-bk-eGQ" secondAttribute="centerX" id="DzY-QO-soF"/>
+                            <constraint firstItem="FkP-sF-sPV" firstAttribute="bottom" secondItem="ej7-Ju-izU" secondAttribute="bottom" constant="20" id="Pa4-FX-mgu"/>
                             <constraint firstItem="zUQ-Bk-HW1" firstAttribute="centerY" secondItem="uNY-bk-eGQ" secondAttribute="centerY" id="ZZ5-Pc-Co8"/>
                             <constraint firstItem="zUQ-Bk-HW1" firstAttribute="centerX" secondItem="uNY-bk-eGQ" secondAttribute="centerX" id="hAm-hI-HGh"/>
                         </constraints>
@@ -271,9 +280,18 @@
                                     <constraint firstItem="vsl-tm-cwj" firstAttribute="leading" secondItem="t4i-gg-3Ur" secondAttribute="leading" id="v03-2J-Gol"/>
                                 </constraints>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fBg-Rg-FHn">
+                                <rect key="frame" x="77" y="617" width="220" height="30"/>
+                                <state key="normal" title="Don't have an account? Sign up."/>
+                                <connections>
+                                    <action selector="goToSignupButtonPressed:" destination="Zhr-WO-a5z" eventType="touchUpInside" id="cuc-5s-yLs"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="fBg-Rg-FHn" firstAttribute="centerX" secondItem="prm-Ji-JvV" secondAttribute="centerX" id="DZ4-Ju-04k"/>
+                            <constraint firstItem="fVi-gB-X0a" firstAttribute="bottom" secondItem="fBg-Rg-FHn" secondAttribute="bottom" constant="20" id="HEY-kR-0Ab"/>
                             <constraint firstItem="t4i-gg-3Ur" firstAttribute="centerX" secondItem="prm-Ji-JvV" secondAttribute="centerX" id="PaR-1Z-TTe"/>
                             <constraint firstItem="t4i-gg-3Ur" firstAttribute="centerY" secondItem="prm-Ji-JvV" secondAttribute="centerY" id="TpV-ib-inb"/>
                         </constraints>
@@ -358,6 +376,11 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rFu-hd-iKK" customClass="PieChartView" customModule="Charts">
+                                        <rect key="frame" x="8" y="294" width="359" height="301"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="yTB-zM-NhE" secondAttribute="bottom" constant="345" id="KS8-5d-Jn7"/>
@@ -380,6 +403,7 @@
                     <connections>
                         <outlet property="daysLabel" destination="Im1-TX-ELQ" id="czo-90-Cec"/>
                         <outlet property="workoutGroupChart" destination="0Cj-sb-W1L" id="zIf-ev-ifY"/>
+                        <outlet property="workoutTimeChart" destination="rFu-hd-iKK" id="h15-Ob-o4N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hQT-qE-bgX" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -55,6 +55,10 @@ class LoginViewController: UIViewController {
         login()
     }
 
+    @IBAction func goToSignupButtonPressed(_ sender: UIButton) {
+        loginDelegate?.goToSignupPage()
+    }
+
     func login() {
         guard let userText = usernameField.text,
             let passText = passwordField.text else {

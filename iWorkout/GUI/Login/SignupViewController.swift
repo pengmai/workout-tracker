@@ -10,6 +10,7 @@ import UIKit
 import os
 
 class SignupViewController: UIViewController {
+    // MARK: - Properties
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var confirmPasswordTextField: UITextField!
@@ -28,6 +29,7 @@ class SignupViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    // MARK: - Actions
     @IBAction func nameChanged(_ sender: UITextField) {
         updateSignUpButtonState()
     }
@@ -38,6 +40,10 @@ class SignupViewController: UIViewController {
 
     @IBAction func confirmPasswordChanged(_ sender: UITextField) {
         updateSignUpButtonState()
+    }
+
+    @IBAction func goToLoginButtonPressed(_ sender: UIButton) {
+        loginDelegate?.goToLoginPage()
     }
 
     @IBAction func signUpButtonPressed(_ sender: UIButton) {

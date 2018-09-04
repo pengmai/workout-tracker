@@ -184,15 +184,14 @@ extension HomeViewController: DeleteWorkoutDelegate {
 // MARK: - Calendar settings
 extension HomeViewController: JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSource {
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
-        formatter.dateFormat = "yyyy MM dd"
-        formatter.timeZone = Calendar.current.timeZone
-        formatter.locale = Calendar.current.locale
-
-        let startDate = formatter.date(from: "2018 04 01")!
+        var start = Date()
+        if let first = resp.workouts.first {
+            start = first.end
+        }
         let now = Date()
 
         return ConfigurationParameters(
-            startDate: startDate,
+            startDate: start,
             endDate: now,
             generateOutDates: .tillEndOfRow
         )
