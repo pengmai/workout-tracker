@@ -46,7 +46,15 @@ class SignupViewController: UIViewController {
         loginDelegate?.goToLoginPage()
     }
 
+    @IBAction func goButtonPressed(_ sender: UITextField) {
+        signUp()
+    }
+
     @IBAction func signUpButtonPressed(_ sender: UIButton) {
+        signUp()
+    }
+
+    private func signUp() {
         let activityIndicator = showActivityIndicator()
         guard let name = nameTextField.text, let password = passwordTextField.text else {
             return
@@ -95,15 +103,4 @@ class SignupViewController: UIViewController {
         passwordTextField.text = nil
         confirmPasswordTextField.text = nil
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

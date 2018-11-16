@@ -132,7 +132,7 @@ extension HomeViewController: AddWorkoutDelegate {
         } else {
             workouts[day] = [workout]
         }
-        calendarView.reloadDates([workout.end])
+        calendarView.reloadData()
         calendarView.scrollToDate(workout.end)
     }
 }
@@ -185,7 +185,7 @@ extension HomeViewController: DeleteWorkoutDelegate {
 extension HomeViewController: JTAppleCalendarViewDelegate, JTAppleCalendarViewDataSource {
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
         var start = Date()
-        if let first = resp.workouts.first {
+        if let first = workouts.reduce([], { $0 + $1.value }).sorted(by: { $0.end < $1.end }).first {
             start = first.end
         }
         let now = Date()
