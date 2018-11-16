@@ -1,0 +1,26 @@
+PODS:
+  - Charts (3.1.1):
+    - Charts/Core (= 3.1.1)
+  - Charts/Core (3.1.1)
+  - JTAppleCalendar (7.1.5)
+  - SwiftKeychainWrapper (3.0.1)
+
+DEPENDENCIES:
+  - Charts
+  - JTAppleCalendar (~> 7.0)
+  - SwiftKeychainWrapper
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Charts
+    - JTAppleCalendar
+    - SwiftKeychainWrapper
+
+SPEC CHECKSUMS:
+  Charts: 90a4d61da0f6e06684c591e3bcab11940fe61736
+  JTAppleCalendar: 2d4f974f9f3c8b4964d51ca1f6e004883c031fbe
+  SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
+
+PODFILE CHECKSUM: 2f4822550d684021e0946434cc3feaefe7fa64ae
+
+COCOAPODS: 1.5.3

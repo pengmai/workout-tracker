@@ -1,3 +1,3 @@
-# workout-api
+# workout-tracker
+An iOS application that keeps track of workouts and displays information about them.
 
-The back end to a simple workout tracker.
