@@ -11,6 +11,7 @@ import Charts
 
 class ChartsViewController: UIViewController {
     @IBOutlet weak var daysLabel: UILabel!
+    @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var workoutGroupChart: LineChartView!
     @IBOutlet weak var workoutTimeChart: PieChartView!
 
@@ -29,14 +30,21 @@ class ChartsViewController: UIViewController {
             } else {
                 daysLabel.text = "\(since) days"
             }
+            detailLabel.text = "Since you last worked out"
+            groupingFunc = areInSameMonth(first:second:)
+
+            setupGroupChart()
+            setupTimeChart()
+            updateGroupChart()
+            updateTimeChart()
+            workoutGroupChart.isHidden = false
+            workoutTimeChart.isHidden = false
+        } else {
+            daysLabel.text = "No workouts yet"
+            detailLabel.text = "Add some workouts to see insights!"
+            workoutGroupChart.isHidden = true
+            workoutTimeChart.isHidden = true
         }
-
-        groupingFunc = areInSameMonth(first:second:)
-
-        setupGroupChart()
-        setupTimeChart()
-        updateGroupChart()
-        updateTimeChart()
     }
 
     func setupGroupChart() {

@@ -60,7 +60,7 @@ enum HTTPVerb: String {
 }
 
 class Network {
-    static let baseUrl = "localhost"
+    static let baseUrl = "workoutdb.herokuapp.com"
 
     static func signUp(name: String, password: String, completion: @escaping (Result<SignUpResponse>) -> Void) {
         let request = UserLoginRequest(name: name, password: password)
@@ -91,11 +91,9 @@ class Network {
 
     static func sendHTTPRequest<T: Codable, R: Decodable>(verb: HTTPVerb, path: String, body: T, completion: @escaping (Result<R>) -> Void, defaultValue: R? = nil) {
         var urlComponents = URLComponents()
-//        urlComponents.scheme = "https"
-        urlComponents.scheme = "http"
+        urlComponents.scheme = "https"
         urlComponents.host = baseUrl
         urlComponents.path = path
-        urlComponents.port = 8080
 
         guard let url = urlComponents.url else {
             completion(.failure(WorkoutError.urlError))

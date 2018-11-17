@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fI3-9Z-dhb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fI3-9Z-dhb">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -159,9 +156,9 @@
                                         <rect key="frame" x="0.0" y="25.5" width="165" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                         <connections>
-                                            <action selector="nameChanged:" destination="lY8-Ry-N3a" eventType="editingDidEnd" id="dzt-t6-qxu"/>
+                                            <action selector="nameChanged:" destination="lY8-Ry-N3a" eventType="editingChanged" id="dNp-GJ-QyK"/>
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3tm-nJ-q9C">
@@ -170,7 +167,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                         <connections>
-                                            <action selector="passwordChanged:" destination="lY8-Ry-N3a" eventType="editingDidEnd" id="ddP-FX-6mc"/>
+                                            <action selector="passwordChanged:" destination="lY8-Ry-N3a" eventType="editingChanged" id="c39-nd-XCi"/>
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2KX-l7-5t4">
@@ -179,7 +176,8 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES"/>
                                         <connections>
-                                            <action selector="confirmPasswordChanged:" destination="lY8-Ry-N3a" eventType="editingDidEnd" id="Z1b-KO-a5g"/>
+                                            <action selector="confirmPasswordChanged:" destination="lY8-Ry-N3a" eventType="editingChanged" id="2pE-rv-Fuj"/>
+                                            <action selector="goButtonPressed:" destination="lY8-Ry-N3a" eventType="editingDidEndOnExit" id="Fl1-bP-yZs"/>
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gTh-UH-rrV">
@@ -249,7 +247,7 @@
                                         <rect key="frame" x="0.0" y="25.5" width="184" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                         <connections>
                                             <action selector="userNameFieldDidChange:" destination="Zhr-WO-a5z" eventType="editingChanged" id="qbv-d2-95s"/>
                                         </connections>
@@ -281,7 +279,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fBg-Rg-FHn">
-                                <rect key="frame" x="77" y="617" width="220" height="30"/>
+                                <rect key="frame" x="77.5" y="617" width="220" height="30"/>
                                 <state key="normal" title="Don't have an account? Sign up."/>
                                 <connections>
                                     <action selector="goToSignupButtonPressed:" destination="Zhr-WO-a5z" eventType="touchUpInside" id="cuc-5s-yLs"/>
@@ -402,6 +400,7 @@
                     </view>
                     <connections>
                         <outlet property="daysLabel" destination="Im1-TX-ELQ" id="czo-90-Cec"/>
+                        <outlet property="detailLabel" destination="tWt-oO-zrX" id="SJ2-lk-u1j"/>
                         <outlet property="workoutGroupChart" destination="0Cj-sb-W1L" id="zIf-ev-ifY"/>
                         <outlet property="workoutTimeChart" destination="rFu-hd-iKK" id="h15-Ob-o4N"/>
                     </connections>
@@ -511,7 +510,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="291" height="287"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="icR-1Y-lll">
+                                                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="icR-1Y-lll">
                                                             <rect key="frame" x="22.932421410239215" y="19.475794663894362" width="83.000000000000057" height="84.500000000000014"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFK-et-Ljz">
