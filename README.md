@@ -12,12 +12,16 @@ I wanted a simple way to keep track of how often I worked out, along with other 
 * Edit the start & end times of existing workouts, or delete them if you've added them by mistake
 
 ## Screenshots
-<img src="screenshots/login.png" alt="login" width="293" />
-<img src="screenshots/signup.png" alt="signup" width="293" />
-<img src="screenshots/calendar.png" alt="calendar" width="293" />
-<img src="screenshots/charts.png" alt="charts" width="293" />
-<img src="screenshots/stopwatch.png" alt="stopwatch" width="293" />
-<img src="screenshots/datepickers.png" alt="datepickers" width="293" />
+<p align="center">
+  <img src="screenshots/login.png" alt="login" width="293" />
+  <img src="screenshots/signup.png" alt="signup" width="293" />
+  <img src="screenshots/calendar.png" alt="calendar" width="293" />
+</p>
+<p align="center">
+  <img src="screenshots/charts.png" alt="charts" width="293" />
+  <img src="screenshots/stopwatch.png" alt="stopwatch" width="293" />
+  <img src="screenshots/datepickers.png" alt="datepickers" width="293" />
+</p>
 
 ## Running for development
 #### The iOS App
