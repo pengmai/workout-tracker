@@ -11,7 +11,7 @@ import UIKit
 extension UIViewController {
     func showActivityIndicator() -> UIVisualEffectView {
         let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        let activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
 
         activityIndicator.removeFromSuperview()
         effectView.removeFromSuperview()

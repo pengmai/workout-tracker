@@ -15,7 +15,7 @@ class WorkoutViewControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        workoutViewController = storyboard.instantiateViewController(withIdentifier: "WorkoutViewController") as! WorkoutViewController
+        workoutViewController = (storyboard.instantiateViewController(withIdentifier: "WorkoutViewController") as! WorkoutViewController)
         workoutViewController.user = 1
     }
 

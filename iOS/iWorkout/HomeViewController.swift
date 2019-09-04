@@ -146,7 +146,7 @@ extension HomeViewController: UpdateWorkoutDelegate {
     func update(workout: Workout) {
         // Flatten the dictionary of workouts.
         var workoutList = workouts.reduce([]) { $0 + $1.value }
-        guard let i = workoutList.index(where: { $0.id == workout.id }) else {
+        guard let i = workoutList.firstIndex(where: { $0.id == workout.id }) else {
             fatalError("Tried to update a workout that wasn't in the list of workouts")
         }
 
@@ -167,7 +167,7 @@ protocol DeleteWorkoutDelegate: class {
 extension HomeViewController: DeleteWorkoutDelegate {
     func delete(workout: Workout) {
         var workoutList = workouts.reduce([], { $0 + $1.value })
-        guard let i = workoutList.index(where: { $0.id == workout.id }) else {
+        guard let i = workoutList.firstIndex(where: { $0.id == workout.id }) else {
             fatalError("Tried to remove a workout that wasn't in the list of workouts")
         }
 

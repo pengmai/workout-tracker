@@ -106,7 +106,7 @@ extension WorkoutTableViewController: UpdateWorkoutDelegate {
         // TODO: Decide what to do if the date of the workout has changed. 1) change the date? would require getting the list of workouts for the day from the parent. 2) have the workout disappear?
         // Update data in the parent.
         updateWorkoutDelegate.update(workout: workout)
-        guard let i = workouts.index(where: { $0.id == workout.id }) else {
+        guard let i = workouts.firstIndex(where: { $0.id == workout.id }) else {
             fatalError("Tried to update workout that wasn't in the list")
         }
 
@@ -118,7 +118,7 @@ extension WorkoutTableViewController: UpdateWorkoutDelegate {
 extension WorkoutTableViewController: DeleteWorkoutDelegate {
     func delete(workout: Workout) {
         deleteWorkoutDelegate.delete(workout: workout)
-        guard let i = workouts.index(where: { $0.id == workout.id }) else {
+        guard let i = workouts.firstIndex(where: { $0.id == workout.id }) else {
             fatalError("Tried to delete workout that wasn't in the list")
         }
 

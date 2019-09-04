@@ -82,7 +82,7 @@ class ChartsViewController: UIViewController {
 
     func updateGroupChart() {
         let workoutValues = workouts.reduce([], { (result, workoutsForDay) -> [(Date, Int)] in
-            if let i = result.index(where: { self.groupingFunc($0.0, workoutsForDay.key) }) {
+            if let i = result.firstIndex(where: { self.groupingFunc($0.0, workoutsForDay.key) }) {
                 var resultCopy = result
                 resultCopy[i].1 += workoutsForDay.value.count
                 return resultCopy
