@@ -31,7 +31,8 @@ class WorkoutViewController: UIViewController {
     var timer = Timer()
     var user: Int!
     var workout: Workout?
-    var numberOfSeconds: Int = 0
+    var numberOfSeconds: Double = 0
+    var timerPausedAt: Date!
     var shouldUnwindToTable: Bool!
 
     override func viewDidLoad() {
@@ -81,6 +82,16 @@ class WorkoutViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    func saveTimerToBackground() {
+        timerPausedAt = Date.init()
+        timer.invalidate()
+    }
+
+    func restoreTimerFromBackground() {
+        numberOfSeconds += Date.init().timeIntervalSince(timerPausedAt)
+        startTimer()
     }
 
     // MARK: - Navigation
@@ -321,9 +332,9 @@ class WorkoutViewController: UIViewController {
 
     @objc private func updateTimer() {
         numberOfSeconds = numberOfSeconds + 1
-        let hours = numberOfSeconds / (60 * 60)
-        let minutes = numberOfSeconds / 60
-        let seconds = numberOfSeconds % 60
+        let hours = Int(numberOfSeconds) / (60 * 60)
+        let minutes = Int(numberOfSeconds) / 60
+        let seconds = Int(numberOfSeconds.rounded()) % 60
         stopWatchLabel.text = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
 }
